@@ -18,7 +18,9 @@ app.get("/:token/get", async (req, res) => {
             download_link: {
                 mp4: result.formats.filter((format) => format.itag === 140)[0],
                 webm: result.formats.filter((format) => format.itag === 251)[0],
+                liveData: result.liveData?.manifestUrl,
             },
+            isLive: result.videoDetails.isLive ? true : false,
         });
     } else {
         res.send("token not found!");
