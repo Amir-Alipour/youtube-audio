@@ -1,13 +1,9 @@
-import {
-    useLoaderData,
-    defer,
-    Await,
-    Link,
-} from "react-router-dom";
+import { useLoaderData, defer, Await, Link } from "react-router-dom";
 import axios from "axios";
 import { Suspense } from "react";
 import LiveVideo from "../../components/LiveVideo";
 import OfflineVideo from "../../components/OfflineVideo";
+import Channel from "../../components/Channel";
 
 export const resultLoader = async ({ request }) => {
     const query = new URL(request.url).searchParams.get("q");
@@ -38,7 +34,6 @@ const Result = () => {
             <Await resolve={data.data}>
                 {(data) => {
                     const { all } = data.result;
-                    console.log(data.result);
 
                     return (
                         <div className="w-full min-h-screen flex justify-center bg-black/95 overflow-hidden">
@@ -58,16 +53,18 @@ const Result = () => {
                                     </h1>
                                 </div>
 
-                                {all.map((video) =>
-                                    video.type === "live" ? (
+                                {all.map((data) =>
+                                    data.type === "live" ? (
                                         <LiveVideo
-                                            key={video.id}
-                                            video={video}
+                                            key={data.id}
+                                            video={data}
                                         />
+                                    ) : data.type === "channel" ? (
+                                        <Channel data={data} />
                                     ) : (
                                         <OfflineVideo
-                                            key={video.id}
-                                            video={video}
+                                            key={data.id}
+                                            video={data}
                                         />
                                     )
                                 )}
