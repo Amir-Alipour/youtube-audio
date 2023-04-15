@@ -3,10 +3,11 @@ import {
     defer,
     Await,
     Link,
-    useLocation,
 } from "react-router-dom";
 import axios from "axios";
 import { Suspense } from "react";
+import LiveVideo from "../../components/LiveVideo";
+import OfflineVideo from "../../components/OfflineVideo";
 
 export const resultLoader = async ({ request }) => {
     const query = new URL(request.url).searchParams.get("q");
@@ -21,7 +22,6 @@ export const resultLoader = async ({ request }) => {
 
 const Result = () => {
     const data = useLoaderData();
-    const location = useLocation();
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -37,7 +37,8 @@ const Result = () => {
         >
             <Await resolve={data.data}>
                 {(data) => {
-                    const { videos } = data.result;
+                    const { all } = data.result;
+                    console.log(data.result);
 
                     return (
                         <div className="w-full min-h-screen flex justify-center bg-black/95 overflow-hidden">
@@ -56,49 +57,20 @@ const Result = () => {
                                         <p>{search}</p>
                                     </h1>
                                 </div>
-                                {videos.map((video) => (
-                                    <Link
-                                        key={video.id}
-                                        to={`/song?id=${video.videoId}`}
-                                        state={{ prevLocation: location }}
-                                    >
-                                        <div className="flex flex-col md:flex-row w-full text-white space-y-5 md:space-y-0 md:space-x-5">
-                                            <div className="w-[100%] md:w-[45%] relative">
-                                                <img
-                                                    className="w-100 rounded-lg"
-                                                    src={video.thumbnail}
-                                                    alt=""
-                                                />
-                                                <p className="absolute bottom-1 right-1 bg-black px-1 rounded text-sm">
-                                                    {video.timestamp}
-                                                </p>
-                                            </div>
-                                            <div className="w-[100%] md:w-[55%] flex flex-col justify-between">
-                                                <div>
-                                                    <h2 className="text-lg">
-                                                        {video.title}
-                                                    </h2>
-                                                    <div className="flex items-center space-x-1 text-xs text-gray-400">
-                                                        <p>
-                                                            views :{" "}
-                                                            {video.views}
-                                                        </p>
-                                                        <p>·</p>
-                                                        <p>{video.ago}</p>
-                                                    </div>
 
-                                                    <p className="mt-3 text-white text-opacity-80 text-sm">
-                                                        {video.author.name}
-                                                    </p>
-                                                </div>
-
-                                                <p className="truncate text-sm  text-white text-opacity-60 mb-5">
-                                                    {video.description}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                ))}
+                                {all.map((video) =>
+                                    video.type === "live" ? (
+                                        <LiveVideo
+                                            key={video.id}
+                                            video={video}
+                                        />
+                                    ) : (
+                                        <OfflineVideo
+                                            key={video.id}
+                                            video={video}
+                                        />
+                                    )
+                                )}
                             </div>
                         </div>
                     );

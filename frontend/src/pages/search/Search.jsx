@@ -57,9 +57,10 @@ const Search = () => {
                     >
                         <BiSearch className="text-lg md:text-3xl text-white" />
                         <input
+                            placeholder="Search or paste YT-Link"
                             value={searchValue}
                             onChange={(e) => setSearchValue(e.target.value)}
-                            className="w-[80%] md:flex-1 h-[99%] rounded-full outline-none border-none text-3xl px-1 bg-black text-white"
+                            className="w-[80%] md:flex-1 h-[99%] rounded-full outline-none border-none text-3xl px-1 bg-black text-white placeholder:text-lg placeholder:-translate-y-1.5"
                         />
                     </div>
                     {suggest && (
