@@ -1,5 +1,6 @@
 # youtube-audio
-Search in youtube and listen the audio of video you select it.
+## Search in youtube and listen the audio of video you select it.
+Also Live Video Supported (Cors-Origin).
 
 # frontend
 app structure : React <br/>
