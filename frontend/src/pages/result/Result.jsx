@@ -1,9 +1,16 @@
-import { useLoaderData, defer, Await, Link } from "react-router-dom";
+import {
+    useLoaderData,
+    defer,
+    Await,
+    Link,
+    useLocation,
+} from "react-router-dom";
 import axios from "axios";
 import { Suspense } from "react";
 import LiveVideo from "../../components/LiveVideo";
 import OfflineVideo from "../../components/OfflineVideo";
 import Channel from "../../components/Channel";
+import PlayList from "../../components/PlayList";
 
 export const resultLoader = async ({ request }) => {
     const query = new URL(request.url).searchParams.get("q");
@@ -16,8 +23,20 @@ export const resultLoader = async ({ request }) => {
     return defer({ data: result });
 };
 
+const DataTypeComponent = ({ data }) => {
+    const types = {
+        live: <LiveVideo video={data} />,
+        channel: <Channel data={data} />,
+        video: <OfflineVideo video={data} />,
+        list: <PlayList data={data} />,
+    };
+
+    return types[data.type];
+};
+
 const Result = () => {
     const data = useLoaderData();
+    const location = useLocation();
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -39,11 +58,21 @@ const Result = () => {
                         <div className="w-full min-h-screen flex justify-center bg-black/95 overflow-hidden">
                             <div className="w-[100%] md:w-[60%] min-h-screen flex flex-col space-y-5 p-2 pb-10">
                                 <div className="flex items-center space-x-3">
+                                   
+                                    <Link
+                                        className="p-2 rounded border w-[70px] h-[50px] text-white flex items-center justify-center"
+                                        to={`${location.state.prevLocation?.pathname}${location.state.prevLocation?.search}`}
+                                        state={{ prevLocation: location.state.prevLocation }}
+                                    >
+                                        Back
+                                    </Link>
+
                                     <Link
                                         className="p-2 rounded border w-[70px] h-[50px] text-white flex items-center justify-center"
                                         to={`/`}
+                                        
                                     >
-                                        Back
+                                        Home
                                     </Link>
                                     <h1 className="text-md md:text-4xl my-5 text-white flex space-x-3">
                                         <p className="text-white text-opacity-70">
@@ -53,21 +82,12 @@ const Result = () => {
                                     </h1>
                                 </div>
 
-                                {all.map((data) =>
-                                    data.type === "live" ? (
-                                        <LiveVideo
-                                            key={data.id}
-                                            video={data}
-                                        />
-                                    ) : data.type === "channel" ? (
-                                        <Channel data={data} />
-                                    ) : (
-                                        <OfflineVideo
-                                            key={data.id}
-                                            video={data}
-                                        />
-                                    )
-                                )}
+                                {all.map((data) => (
+                                    <DataTypeComponent
+                                        key={data.id}
+                                        data={data}
+                                    />
+                                ))}
                             </div>
                         </div>
                     );
