@@ -3,7 +3,7 @@ import {
     defer,
     Await,
     Link,
-    useLocation,
+    useNavigate,
 } from "react-router-dom";
 import axios from "axios";
 import { Suspense } from "react";
@@ -36,7 +36,7 @@ const DataTypeComponent = ({ data }) => {
 
 const Result = () => {
     const data = useLoaderData();
-    const location = useLocation();
+    const navigate = useNavigate();
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -59,13 +59,13 @@ const Result = () => {
                             <div className="w-[100%] md:w-[60%] min-h-screen flex flex-col space-y-5 p-2 pb-10">
                                 <div className="flex items-center space-x-3">
                                    
-                                    <Link
+                                    <button
                                         className="p-2 rounded border w-[70px] h-[50px] text-white flex items-center justify-center"
-                                        to={`${location.state.prevLocation?.pathname}${location.state.prevLocation?.search}`}
-                                        state={{ prevLocation: location.state.prevLocation }}
+                                        onClick={() => navigate(-1)}
+                                        
                                     >
                                         Back
-                                    </Link>
+                                    </button>
 
                                     <Link
                                         className="p-2 rounded border w-[70px] h-[50px] text-white flex items-center justify-center"

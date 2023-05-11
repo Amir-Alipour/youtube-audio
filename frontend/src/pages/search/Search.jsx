@@ -2,11 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import debounce from "lodash.debounce";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Search = () => {
     const navigate = useNavigate();
-    const location = useLocation();
 
     const [searchValue, setSearchValue] = useState("");
     const [suggest, setSuggest] = useState(null);
@@ -15,9 +14,7 @@ const Search = () => {
     const handleSearch = (e) => {
         e.preventDefault();
 
-        navigate(`/result?q=${searchValue}`, {
-            state: { prevLocation: location },
-        });
+        navigate(`/result?q=${searchValue}`);
     };
 
     useEffect(() => {
@@ -35,7 +32,7 @@ const Search = () => {
                     setSuggest(filteredSuggest);
                 })
                 .catch((error) => console.error(error));
-        }, 200);
+        }, 150);
 
         debouncedApiCall();
 
@@ -70,7 +67,6 @@ const Search = () => {
                                     <Link
                                         key={sugg}
                                         to={`/result?q=${sugg}`}
-                                        state={{ prevLocation: location }}
                                     >
                                         <div className="w-full px-3 py-2 text-xl border-t text-white">
                                             {sugg}

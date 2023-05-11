@@ -3,7 +3,7 @@ import {
     defer,
     Await,
     Link,
-    useLocation,
+    useNavigate,
 } from "react-router-dom";
 import axios from "axios";
 import { Suspense, useState } from "react";
@@ -24,7 +24,7 @@ export const songLoader = async ({ request }) => {
 
 const Song = () => {
     const data = useLoaderData();
-    const location = useLocation();
+    const navigate = useNavigate();
 
     const [isHidden, setIsHidden] = useState(true);
 
@@ -101,12 +101,12 @@ const Song = () => {
                         <div className="w-full min-h-screen flex md:items-center md:justify-center bg-black/95">
                             <div className="w-[100%] md:w-[60%] min-h-screen flex justify-center flex-col space-y-5 p-2 py-10">
                                 <div className="flex space-x-4 text-white">
-                                    <Link
+                                    <button
                                         className="rounded p-2 border"
-                                        to={`${location.state.prevLocation?.pathname}${location.state.prevLocation?.search}`}
+                                        onClick={() => navigate(-1)}
                                     >
                                         Back
-                                    </Link>
+                                    </button>
                                     <Link
                                         className="rounded p-2 border"
                                         to={`/`}

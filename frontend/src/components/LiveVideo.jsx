@@ -1,15 +1,11 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import IntToString from "../utils/IntToString";
 
 const LiveVideo = ({ video }) => {
-    const location = useLocation();
 
     return (
         <Link
             to={`/song?id=${video.videoId}`}
-            state={{
-                prevLocation: location,
-            }}
         >
             <div className="flex flex-col md:flex-row w-full text-white space-y-5 md:space-y-0 md:space-x-5">
                 <div className="w-[100%] md:w-[45%] relative">
