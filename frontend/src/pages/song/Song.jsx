@@ -196,6 +196,7 @@ const Song = () => {
                                             controls
                                             className="w-full"
                                             src={audio}
+                                            loop
                                         ></audio>
                                     )}
                                 </div>
