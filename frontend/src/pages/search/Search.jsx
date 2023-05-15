@@ -32,7 +32,7 @@ const Search = () => {
                     setSuggest(filteredSuggest);
                 })
                 .catch((error) => console.error(error));
-        }, 150);
+        }, 50);
 
         debouncedApiCall();
 
