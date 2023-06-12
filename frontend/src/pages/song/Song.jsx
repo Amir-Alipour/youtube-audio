@@ -9,6 +9,7 @@ import axios from "axios";
 import { Suspense, useState } from "react";
 
 import Hls from "hls.js";
+import Description from "../../components/Description";
 
 export const songLoader = async ({ request }) => {
     const id = new URL(request.url).searchParams.get("id");
@@ -202,21 +203,10 @@ const Song = () => {
                                 </div>
                                 {/* player */}
 
-                                <div className="text-white text-sm">
-                                    {data.videoDetail.shortDescription
-                                        .split("\n")
-                                        .map(function (item, idx) {
-                                            return (
-                                                <span
-                                                    className="break-words"
-                                                    key={idx}
-                                                >
-                                                    {item}
-                                                    <br />
-                                                </span>
-                                            );
-                                        })}
-                                </div>
+                                <Description
+                                    text={data.videoDetail.shortDescription}
+                                />
+
                                 {/* description */}
                             </div>
                         </div>

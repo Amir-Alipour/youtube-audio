@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import debounce from "lodash.debounce";
 import { Link, useNavigate } from "react-router-dom";
 
 const Search = () => {
@@ -20,23 +19,17 @@ const Search = () => {
     useEffect(() => {
         if (searchValue.trim() === "") return;
 
-        const debouncedApiCall = debounce(() => {
-            axios
-                .get(
-                    `https://y0utubeee-audiooo-api-v1.vercel.app/a@1aa1-13haf--31bbnlm/suggest?q=${searchValue}`
-                )
-                .then(({ data }) => {
-                    let filteredSuggest = data.result.filter(
-                        (sugg) => !sugg.includes("reaction")
-                    );
-                    setSuggest(filteredSuggest);
-                })
-                .catch((error) => console.error(error));
-        }, 50);
-
-        debouncedApiCall();
-
-        return () => debouncedApiCall.cancel();
+        axios
+            .get(
+                `https://y0utubeee-audiooo-api-v1.vercel.app/a@1aa1-13haf--31bbnlm/suggest?q=${searchValue}`
+            )
+            .then(({ data }) => {
+                let filteredSuggest = data.result.filter(
+                    (sugg) => !sugg.includes("reaction")
+                );
+                setSuggest(filteredSuggest);
+            })
+            .catch((error) => console.error(error));
     }, [searchValue]);
 
     return (
@@ -64,10 +57,7 @@ const Search = () => {
                         <div className="w-[99%] min-h-[100px] h-auto border -top-8 relative rounded-lg">
                             <div className="w-full mt-12">
                                 {suggest.map((sugg) => (
-                                    <Link
-                                        key={sugg}
-                                        to={`/result?q=${sugg}`}
-                                    >
+                                    <Link key={sugg} to={`/result?q=${sugg}`}>
                                         <div className="w-full px-3 py-2 text-xl border-t text-white">
                                             {sugg}
                                         </div>
