@@ -191,11 +191,12 @@ const Song = () => {
                                         </div>
                                     ) : (
                                         <audio
+                                            ref={(player) => player.focus()}
                                             onPlay={() =>
                                                 handleMetaData(detail)
                                             }
                                             controls
-                                            className="w-full"
+                                            className="w-full outline-none"
                                             src={audio}
                                             loop
                                         ></audio>
