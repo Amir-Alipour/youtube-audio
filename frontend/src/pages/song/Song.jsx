@@ -191,7 +191,7 @@ const Song = () => {
                                         </div>
                                     ) : (
                                         <audio
-                                            ref={(player) => player.focus()}
+                                            ref={(player) => player?.focus()}
                                             onPlay={() =>
                                                 handleMetaData(detail)
                                             }
