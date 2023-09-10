@@ -1,6 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { RootState } from "../store";
-
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const playlistsFromLocalstorage: Playlist[] = [];
 
