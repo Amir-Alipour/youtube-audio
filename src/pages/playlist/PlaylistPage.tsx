@@ -24,7 +24,7 @@ import PhotoIcon from "@mui/icons-material/PhotoSizeSelectActualOutlined";
 import EditIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import PlaylistModal from "./PlaylistModal";
-import { deleteItemFromPlaylist } from "@/store/playlistSlice/PlaylistReducer";
+
 
 export type ModalMode = "cover" | "name" | "delete";
 
