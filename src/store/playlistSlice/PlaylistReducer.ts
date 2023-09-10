@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { RootState } from "../store";
 
 
 const playlistsFromLocalstorage: Playlist[] = [];
@@ -53,6 +54,13 @@ export const PlaylistSlice = createSlice({
             state.playlists[state.playlists.findIndex(p => p.playlist_name === playlist)].thumnail = cover
             updatePlaylist(updatedPlaylist);
         },
+        deleteItemFromPlaylist: (state, { payload: { ID, playlist } }: PayloadAction<{ playlist: string, ID: string }>) => {
+            const selectedPlaylist = getPlaylist(playlist);
+            const updatedPlaylist = { ...selectedPlaylist, items: [...selectedPlaylist.items.filter(i => i.videoDetail.videoId !== ID)], last_update: new Date() }
+            state.playlists[state.playlists.findIndex(p => p.playlist_name === playlist)].items = [...updatedPlaylist.items];
+            updatePlaylist(updatedPlaylist);
+
+        },
         deletePlaylist: (state, action: PayloadAction<string>) => {
             state.playlists = state.playlists.filter(p => p.playlist_name !== action.payload)
             localStorage.removeItem(action.payload);
@@ -61,7 +69,7 @@ export const PlaylistSlice = createSlice({
 })
 
 
-export const { createPlaylist, addItemToPlayList, reNamePlaylist, changePlaylistCover, deletePlaylist } = PlaylistSlice.actions
+export const { createPlaylist, addItemToPlayList, reNamePlaylist, changePlaylistCover, deletePlaylist, deleteItemFromPlaylist } = PlaylistSlice.actions
 export default PlaylistSlice.reducer
 
 const getPlaylist = (playlist: string): Playlist => {

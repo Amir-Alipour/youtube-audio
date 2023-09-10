@@ -9,11 +9,12 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     changeIndex,
     changePlayingPlaylist,
 } from "@/store/playerSlice/PlayerReducer";
+import { RootState } from "@/store/store";
 
 // ICONS
 import MoreIcon from "@mui/icons-material/MoreHoriz";
@@ -23,6 +24,7 @@ import PhotoIcon from "@mui/icons-material/PhotoSizeSelectActualOutlined";
 import EditIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import PlaylistModal from "./PlaylistModal";
+import { deleteItemFromPlaylist } from "@/store/playlistSlice/PlaylistReducer";
 
 export type ModalMode = "cover" | "name" | "delete";
 
@@ -31,6 +33,9 @@ const PlaylistPage = () => {
     const dispatch = useDispatch();
     const playlistName = decodeURI(
         useLocation().pathname.split("/").slice(-1)[0]
+    );
+    const currentPlaylist = useSelector((state: RootState) =>
+        state.playlist.playlists.find((p) => p.playlist_name === playlistName)
     );
     const [playlist, setPlaylist] = useState<Playlist | null>(null);
     const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -52,6 +57,10 @@ const PlaylistPage = () => {
         setPlaylist(JSON.parse(localStorage.getItem(playlistName)!));
     };
     // FUNCTIONS
+
+    useEffect(() => {
+        handleUpdateData();
+    }, [currentPlaylist]);
 
     useEffect(() => {
         const findInLS = JSON.parse(localStorage.getItem(playlistName)!);
@@ -162,7 +171,11 @@ const PlaylistPage = () => {
                 </div>
                 <div className="col-span-3 flex flex-col gap-y-4">
                     {playlist?.items.map((audio) => (
-                        <PlaylistAudio audio={audio} />
+                        <PlaylistAudio
+                            audio={audio}
+                            handleUpdate={handleUpdateData}
+                            playlistID={playlistName}
+                        />
                     ))}
                 </div>
             </div>

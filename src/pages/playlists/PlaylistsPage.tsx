@@ -103,7 +103,7 @@ const PlaylistsPage = () => {
                     <SearchIcon className="text-red-500 mt-0.5" />
                     <input
                         onChange={handleSearch}
-                        placeholder="Search in History"
+                        placeholder="Search in Playlists"
                         type="text"
                         className="text-white w-full h-[100%] bg-transparent outline-none pl-2"
                     />

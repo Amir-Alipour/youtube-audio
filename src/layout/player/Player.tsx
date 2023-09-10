@@ -2,7 +2,7 @@ import "./Player.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { PlayerType, Reaplay } from "reaplay";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import HHMMSS from "../../utils/HH-MM-SS";
 import { Link } from "react-router-dom";
 import PlayerPlaylist from "./PlayerPlaylist";
@@ -20,17 +20,26 @@ import QueueMusicIcon from "@mui/icons-material/QueueMusicOutlined";
 
 const Player = () => {
     const playerState = useSelector((state: RootState) => state.player);
-    const playlistSrc: string[] = playerState.playlist.map(
-        (audio: Audio) => audio.download_link.mp4.url
-    );
+    const [playlistSrc, setPlayingSrc] = useState<string[]>([]);
 
     const indexBtn = useRef<HTMLButtonElement>(null);
+    const playlistIndexBtn = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
-        console.log(playerState.trackIndex);
-        
+        setPlayingSrc(
+            playerState.playlist.map(
+                (audio: Audio) => audio.download_link.mp4.url
+            )
+        );
+    }, [playerState.playlist]);
+
+    useEffect(() => {
         indexBtn.current?.click();
-    }, [playerState.trackIndex])
+    }, [playerState.trackIndex]);
+
+    useEffect(() => {
+        playlistIndexBtn.current?.click();
+    }, [playlistSrc]);
 
     return (
         <>
@@ -38,17 +47,30 @@ const Player = () => {
                 <div className="w-[1340px] sticky bottom-0 h-[120px]">
                     <Reaplay tracks={playlistSrc}>
                         {(player: PlayerType) => {
-                            useEffect(() => {                                
+                            useEffect(() => {
                                 player.pause();
                             }, []);
-                            
+
                             useEffect(() => {
-                                player.setTrackIndex(0);
+                                // player.setTrackIndex(0);
                             }, [playlistSrc]);
 
                             return (
                                 <div className="text-white w-100 bg-stone-900 border-2 border-b-0 border-red-500 rounded-t-2xl h-[100%] flex items-center justify-between px-5">
-                                    <button ref={indexBtn} onClick={() => player.setTrackIndex(playerState.trackIndex)} className="hidden"></button>
+                                    <button
+                                        ref={indexBtn}
+                                        onClick={() =>
+                                            player.setTrackIndex(
+                                                playerState.trackIndex
+                                            )
+                                        }
+                                        className="hidden"
+                                    ></button>
+                                    <button
+                                        ref={playlistIndexBtn}
+                                        onClick={() => player.setTrackIndex(0)}
+                                        className="hidden"
+                                    ></button>
                                     <div className="flex flex-col w-[33%]">
                                         <Link
                                             to={`/detail?id=${

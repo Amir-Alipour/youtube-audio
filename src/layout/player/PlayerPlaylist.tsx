@@ -8,6 +8,7 @@ import {
 import {
     addItemToPlayList,
     createPlaylist,
+    deleteItemFromPlaylist,
 } from "@/store/playlistSlice/PlaylistReducer";
 
 import { RootState } from "@/store/store";
@@ -47,6 +48,15 @@ const PlayerPlaylist = ({
             dispatch(createPlaylist(playListName));
             setOnAddingNew(false);
         }
+    };
+
+    const handleRemove = (playlist_name: string) => {
+        dispatch(
+            deleteItemFromPlaylist({
+                playlist: playlist_name,
+                ID: currentAudioID,
+            })
+        );
     };
 
     useEffect(() => {
@@ -138,8 +148,16 @@ const PlayerPlaylist = ({
                                                 </p>
                                             </div>
                                         ) : (
-                                            <div>
-                                                <p className="mr-2">Available</p>
+                                            <div className="cursor-pointer mr-2 p-3 flex items-center gap-x-2 text-red-500 border border-red-500 rounded-lg">
+                                                <p
+                                                    onClick={() =>
+                                                        handleRemove(
+                                                            playlist.playlist_name
+                                                        )
+                                                    }
+                                                >
+                                                    Remove
+                                                </p>
                                             </div>
                                         )}
                                     </div>
