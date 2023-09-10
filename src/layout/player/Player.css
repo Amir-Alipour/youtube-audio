@@ -1,0 +1,206 @@
+/* ========================= */
+
+.progress {
+    -webkit-appearance: none;
+    width: 100%;
+    margin-left: 7px;
+    margin-right: 7px;
+    overflow: hidden;
+}
+
+.progress:focus {
+    outline: none;
+}
+
+.progress::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px #3a3a3a;
+    background: #3a3a3a;
+    border-radius: 1000px;
+    overflow: hidden;
+}
+
+.progress::-webkit-slider-thumb {
+    border: 1px solid #fff;
+    height: 8px;
+    width: 16px;
+    border-radius: 25px;
+    background: #fff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -1px;
+    /*  slider progress trick  */
+    box-shadow: -407px 0 0 400px #ef4444;
+}
+
+/* =============================== */
+
+.dropdownVolume {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownVolume .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #262626;
+    min-width: 50px;
+    min-height: 180px;
+    box-shadow: 0px 5px 16px 0px rgba(0, 0, 0, 0.8);
+    z-index: 1;
+    top: -193px;
+    left: -5px;
+    border-radius: 12px;
+    border: 1px solid #ef4444;
+}
+
+.dropdownVolume .dropdown-content:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 1px;
+    z-index: 15;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #ef4444;
+}
+
+.dropdownVolume:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.dropdownVolume .dropdown-content p {
+    margin-top: 12px;
+}
+
+/* volume style */
+.volume {
+    -webkit-appearance: none;
+    position: absolute;
+    top: 95px;
+    transform: rotate(270deg);
+    overflow: hidden;
+    border-radius: 15px;
+
+    border: none;
+    outline: none;
+}
+
+.volume:focus {
+    outline: none;
+}
+
+.volume::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 7px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px #3a3a3a;
+    background: #3a3a3a;
+    border-radius: 1000px;
+    overflow: hidden;
+}
+
+.volume::-webkit-slider-thumb {
+    border: 1px solid #fff;
+    height: 9px;
+    width: 16px;
+    border-radius: 15px;
+    background: #fff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -1.5px;
+    /*  slider progress trick  */
+    box-shadow: -407px 0 0 400px #ef4444;
+}
+/* ---------------- */
+
+.dropdownQueue {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownQueue .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #1c1917;
+    width: 400px;
+    min-height: 470px;
+    max-height: 470px;
+    box-shadow: 0px 5px 16px 0px rgba(0, 0, 0, 0.8);
+    z-index: 1;
+    top: -480px;
+    left: -180px;
+    border-radius: 12px;
+    border: 1px solid #ef4444;
+}
+
+.dropdownQueue .dropdown-content:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 1px;
+    z-index: 15;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #ef4444;
+}
+
+.dropdownQueue:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* justify-content: center; */
+}
+
+.dropdownQueue .dropdown-content p {
+    margin-top: 12px;
+}
+
+.queueList {
+    overflow-y: auto;
+}
+
+.queueList::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+.queueList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+.queueList::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 25px;
+}
+
+/* ------------------------------------- */
+/* ------------------------------------- */
+/* ------------------------------------- */
+
+.add_to_playlist_list::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+.add_to_playlist_list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+.add_to_playlist_list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 25px;
+}
