@@ -3,14 +3,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 export type PlayerInitialState = {
     trackIndex: number,
     playlist: Audio[],
-    ids: string[]
-
+    ids: string[],
+    isPlaylist: boolean,
 }
 
 const initialState: PlayerInitialState = {
     trackIndex: 0,
     playlist: [],
-    ids: []
+    ids: [],
+    isPlaylist: false
 }
 
 
@@ -19,17 +20,19 @@ export const PlayerSlice = createSlice({
     initialState,
     reducers: {
         addToPlaylist: (state, action: PayloadAction<Audio>) => {
-            state.playlist = [ ...state.playlist, action.payload];
+            state.playlist = [...state.playlist, action.payload];
             state.ids = [...state.ids, action.payload.videoDetail.videoId];
+            state.isPlaylist = false;
         },
         changeIndex: (state, action: PayloadAction<number>) => {
-            state.trackIndex = action.payload;            
+            state.trackIndex = action.payload;
         },
         changePlayingPlaylist: (state, action: PayloadAction<Audio[]>) => {
             state.trackIndex = 0;
             state.playlist = [...action.payload];
             state.ids = [...action.payload.map(a => a.videoDetail.videoId)]
-        }
+            state.isPlaylist = true;
+        },
     }
 })
 

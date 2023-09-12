@@ -38,7 +38,9 @@ const Player = () => {
     }, [playerState.trackIndex]);
 
     useEffect(() => {
-        playlistIndexBtn.current?.click();
+        if (playerState.isPlaylist) {
+            playlistIndexBtn.current?.click();
+        }
     }, [playlistSrc]);
 
     return (
@@ -50,10 +52,6 @@ const Player = () => {
                             useEffect(() => {
                                 player.pause();
                             }, []);
-
-                            useEffect(() => {
-                                // player.setTrackIndex(0);
-                            }, [playlistSrc]);
 
                             return (
                                 <div className="text-white w-100 bg-stone-900 border-2 border-b-0 border-red-500 rounded-t-2xl h-[100%] flex items-center justify-between px-5">
@@ -68,7 +66,10 @@ const Player = () => {
                                     ></button>
                                     <button
                                         ref={playlistIndexBtn}
-                                        onClick={() => player.setTrackIndex(0)}
+                                        onClick={() => {
+                                            player.setTrackIndex(0);
+                                            player.forceUpdatePlayer();
+                                        }}
                                         className="hidden"
                                     ></button>
                                     <div className="flex flex-col w-[33%]">
@@ -76,21 +77,21 @@ const Player = () => {
                                             to={`/detail?id=${
                                                 playerState.playlist[
                                                     player.trackIndex
-                                                ].videoDetail.videoId
+                                                ]?.videoDetail.videoId
                                             }`}
                                             className="truncate w-[80%]"
                                         >
                                             {
                                                 playerState.playlist[
                                                     player.trackIndex
-                                                ].videoDetail.title
+                                                ]?.videoDetail.title
                                             }
                                         </Link>
                                         <p className="mt-1 text-stone-400 text-sm">
                                             {
                                                 playerState.playlist[
                                                     player.trackIndex
-                                                ].videoDetail.author
+                                                ]?.videoDetail.author
                                             }
                                         </p>
                                     </div>
@@ -195,7 +196,7 @@ const Player = () => {
                                             currentAudioID={
                                                 playerState.playlist[
                                                     player.trackIndex
-                                                ].videoDetail.videoId
+                                                ]?.videoDetail.videoId
                                             }
                                             currentAudio={
                                                 playerState.playlist[
@@ -221,6 +222,11 @@ const Player = () => {
 
                                                             return (
                                                                 <div
+                                                                    key={
+                                                                        track
+                                                                            ?.videoDetail
+                                                                            .videoId
+                                                                    }
                                                                     className={`cursor-pointer w-100 flex justify-center border border-stone-700 rounded-lg py-1.5 ${
                                                                         indexIsPlaying
                                                                             ? "bg-stone-700"
@@ -260,14 +266,14 @@ const Player = () => {
                                                                             <p className="w-[220px] text-md relative top-1.5 truncate text-stone-100">
                                                                                 {
                                                                                     track
-                                                                                        .videoDetail
+                                                                                        ?.videoDetail
                                                                                         .title
                                                                                 }
                                                                             </p>
                                                                             <p className="text-sm relative bottom-1.5  text-stone-400">
                                                                                 {
                                                                                     track
-                                                                                        .videoDetail
+                                                                                        ?.videoDetail
                                                                                         .author
                                                                                 }
                                                                             </p>
@@ -276,7 +282,7 @@ const Player = () => {
                                                                             <p className="text-sm">
                                                                                 {HHMMSS(
                                                                                     +track
-                                                                                        .videoDetail
+                                                                                        ?.videoDetail
                                                                                         .lengthSeconds
                                                                                 )}
                                                                             </p>

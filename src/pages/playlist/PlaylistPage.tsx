@@ -25,7 +25,6 @@ import EditIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import PlaylistModal from "./PlaylistModal";
 
-
 export type ModalMode = "cover" | "name" | "delete";
 
 const PlaylistPage = () => {
@@ -170,8 +169,9 @@ const PlaylistPage = () => {
                     </div>
                 </div>
                 <div className="col-span-3 flex flex-col gap-y-4">
-                    {playlist?.items.map((audio) => (
+                    {playlist?.items.reverse().map((audio) => (
                         <PlaylistAudio
+                            key={audio.videoDetail.videoId}
                             audio={audio}
                             handleUpdate={handleUpdateData}
                             playlistID={playlistName}

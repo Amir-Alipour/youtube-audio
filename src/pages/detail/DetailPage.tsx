@@ -152,6 +152,7 @@ const DetailPage = () => {
                                 .slice(0, 5)
                                 .map((item) => (
                                     <div
+                                        key={item.videoDetail.videoId}
                                         onClick={() =>
                                             navigate(
                                                 `/detail?id=${item.videoDetail.videoId}`

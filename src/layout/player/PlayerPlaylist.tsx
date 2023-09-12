@@ -60,11 +60,11 @@ const PlayerPlaylist = ({
     };
 
     useEffect(() => {
-        if(open === false) {
+        if (open === false) {
             setOnAddingNew(false);
-            setPlayListName('');
+            setPlayListName("");
         }
-    }, [open])
+    }, [open]);
 
     return (
         <div className=" cursor-pointer flex items-center justify-center w-10 h-10 rounded-lg border border-stone-600 hover:bg-stone-600">
@@ -136,28 +136,26 @@ const PlayerPlaylist = ({
                                         {!playlist.items
                                             .map((a) => a.videoDetail.videoId)
                                             .includes(currentAudioID) ? (
-                                            <div className="cursor-pointer mr-2 p-3 flex items-center gap-x-2 text-white border border-stone-500 rounded-lg">
-                                                <p
-                                                    onClick={() =>
-                                                        handleAddToPlaylist(
-                                                            playlist.playlist_name
-                                                        )
-                                                    }
-                                                >
-                                                    Add
-                                                </p>
+                                            <div
+                                                onClick={() =>
+                                                    handleAddToPlaylist(
+                                                        playlist.playlist_name
+                                                    )
+                                                }
+                                                className="cursor-pointer mr-2 p-3 flex items-center gap-x-2 text-white border border-stone-500 rounded-lg"
+                                            >
+                                                <p>Add</p>
                                             </div>
                                         ) : (
-                                            <div className="cursor-pointer mr-2 p-3 flex items-center gap-x-2 text-red-500 border border-red-500 rounded-lg">
-                                                <p
-                                                    onClick={() =>
-                                                        handleRemove(
-                                                            playlist.playlist_name
-                                                        )
-                                                    }
-                                                >
-                                                    Remove
-                                                </p>
+                                            <div
+                                                onClick={() =>
+                                                    handleRemove(
+                                                        playlist.playlist_name
+                                                    )
+                                                }
+                                                className="cursor-pointer mr-2 p-3 flex items-center gap-x-2 text-red-500 border border-red-500 rounded-lg"
+                                            >
+                                                <p>Remove</p>
                                             </div>
                                         )}
                                     </div>
