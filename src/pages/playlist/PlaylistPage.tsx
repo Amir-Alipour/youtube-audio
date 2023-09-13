@@ -15,6 +15,7 @@ import {
     changePlayingPlaylist,
 } from "@/store/playerSlice/PlayerReducer";
 import { RootState } from "@/store/store";
+import axios from "axios";
 
 // ICONS
 import MoreIcon from "@mui/icons-material/MoreHoriz";
@@ -36,17 +37,43 @@ const PlaylistPage = () => {
     const currentPlaylist = useSelector((state: RootState) =>
         state.playlist.playlists.find((p) => p.playlist_name === playlistName)
     );
+    const playerPlaylist = useSelector(
+        (state: RootState) => state.player.playlist
+    );
     const [playlist, setPlaylist] = useState<Playlist | null>(null);
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [modalMode, setModalMode] = useState<ModalMode>("name");
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     // STAETS
 
-    const handlePlayPlaylist = () => {
-        dispatch(changePlayingPlaylist(playlist?.items || []));
+    const handlePlayPlaylist = async () => {
+        setIsLoading(true);
+        const playlistItems: Audio[] = [];
+        for (let itemIndex in playlist?.items) {
+            const vidID = playlist?.items[+itemIndex].videoDetail.videoId;
+            await axios
+                .get<Audio>(
+                    `https://y0utubeee-audiooo-api-v1.vercel.app/a@1aa1-13haf--31bbnlm/get?id=${vidID}`
+                )
+                .then((res) => {
+                    playlistItems.push(res.data);
+                });
+        }
+        setIsLoading(false);
+        dispatch(changePlayingPlaylist(playlistItems));
     };
 
-    const handleShuffle = () => {
-        handlePlayPlaylist();
+    const handleShuffle = async () => {
+        if (
+            playerPlaylist.length !== playlist?.items.length ||
+            playerPlaylist.every(
+                (val, index) =>
+                    val.videoDetail.videoId !==
+                    playlist?.items[index].videoDetail.videoId
+            )
+        ) {
+            await handlePlayPlaylist();
+        }
         dispatch(
             changeIndex(Math.floor(Math.random() * playlist?.items.length!))
         );
@@ -156,8 +183,14 @@ const PlaylistPage = () => {
                             onClick={handlePlayPlaylist}
                             className="cursor-pointer h-[45px] border border-stone-700 flex items-center justify-center gap-x-2 text-gray-400 text-md rounded-xl"
                         >
-                            <PlayIcon className="-ml-2" />
-                            <p>Play</p>
+                            {isLoading ? (
+                                <p>Loading ...</p>
+                            ) : (
+                                <>
+                                    <PlayIcon className="-ml-2" />
+                                    <p>Play</p>
+                                </>
+                            )}
                         </div>
                         <div
                             onClick={handleShuffle}
