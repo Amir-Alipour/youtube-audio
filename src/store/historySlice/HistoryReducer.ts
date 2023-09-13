@@ -25,10 +25,14 @@ export const HistorySlice = createSlice({
 
             state.videos.push(action.payload);
             localStorage.setItem('history', JSON.stringify(state.videos.map(vid => vid)));
+        },
+        clearHistory: (state) => {
+            state.videos = [];
+            localStorage.removeItem('history');
         }
     }
 })
 
 
-export const { addHistory } = HistorySlice.actions
+export const { addHistory, clearHistory } = HistorySlice.actions
 export default HistorySlice.reducer
