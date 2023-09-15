@@ -53,6 +53,16 @@ const Player = () => {
                                 player.pause();
                             }, []);
 
+                            useEffect(() => {
+                                if(!playerState.isPlaylist) {
+                                    player.onScrubEnd(player.trackProgress);   
+                                }
+                            }, [playlistSrc])
+
+                            useEffect(() => {
+                                player.onScrubEnd(player.trackProgress);
+                            }, [player.isRepeat])
+
                             return (
                                 <div className="text-white w-100 bg-stone-900 border-2 border-b-0 border-red-500 rounded-t-2xl h-[100%] flex items-center justify-between px-5">
                                     <button
