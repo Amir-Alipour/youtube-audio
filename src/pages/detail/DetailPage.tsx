@@ -43,7 +43,7 @@ const DetailPage = () => {
     }, [ID]);
 
     const handleAddToPlaylist = () => {
-        if (audio?.download_link.mp4) {
+        if (audio?.download_link.mp4 && audio?.download_link.mp4.url.trim() !== "") {
             dispatch(addToPlaylist(audio!));
             dispatch(addHistory(audio!))
         } else {

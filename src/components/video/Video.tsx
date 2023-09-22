@@ -26,7 +26,7 @@ const Video = ({ video }: VideoProps) => {
                 `https://y0utubeee-audiooo-api-v1.vercel.app/a@1aa1-13haf--31bbnlm/get?id=${video.videoId}`
             )
             .then((res) => {
-                if (res.data.download_link.mp4) {
+                if (res.data.download_link.mp4 && res.data.download_link.mp4.url.trim() !== "") {
                     dispatch(addToPlaylist(res.data));
                     dispatch(addHistory(res.data))
                 } else {
