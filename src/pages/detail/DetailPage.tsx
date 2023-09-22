@@ -11,7 +11,10 @@ import Description from "./Description";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { useNavigate } from "react-router-dom";
-import { addToPlaylist, changeIndex } from "../../store/playerSlice/PlayerReducer";
+import {
+    addToPlaylist,
+    changeIndex,
+} from "../../store/playerSlice/PlayerReducer";
 import toast from "react-hot-toast";
 import { addHistory } from "../../store/historySlice/HistoryReducer";
 
@@ -43,9 +46,12 @@ const DetailPage = () => {
     }, [ID]);
 
     const handleAddToPlaylist = () => {
-        if (audio?.download_link.mp4 && audio?.download_link.mp4.url.trim() !== "") {
+        if (
+            audio?.download_link.mp4 &&
+            audio?.download_link.mp4.url.trim() !== ""
+        ) {
             dispatch(addToPlaylist(audio!));
-            dispatch(addHistory(audio!))
+            dispatch(addHistory(audio!));
         } else {
             toast.error("Can't crawl data of this video :(", {
                 duration: 2500,
@@ -61,9 +67,9 @@ const DetailPage = () => {
     };
 
     const handlePlay = () => {
-        if (playerState.ids.includes(ID!)) {            
+        if (playerState.ids.includes(ID!)) {
             dispatch(changeIndex(playerState.ids.findIndex((id) => id === ID)));
-            dispatch(addHistory(audio!))
+            dispatch(addHistory(audio!));
         } else {
             handleAddToPlaylist();
         }
@@ -85,7 +91,10 @@ const DetailPage = () => {
                                         className="w-100 h-[100%] rounded-lg"
                                         src={
                                             audio.videoDetail.thumbnail.thumbnails.filter(
-                                                (tumb) => tumb.width === 1920
+                                                (tumb) =>
+                                                    tumb.width === 1920 ||
+                                                    tumb.width === 336 ||
+                                                    tumb.width === 196
                                             )[0].url
                                         }
                                         alt={

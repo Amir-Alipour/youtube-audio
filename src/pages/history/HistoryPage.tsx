@@ -4,13 +4,13 @@ import { RootState } from "../../store/store";
 import { ChangeEvent, useState } from "react";
 import VerticalAudio from "./VerticalAudio";
 import HorizontalAudio from "./HorizontalAudio";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { clearHistory } from "@/store/historySlice/HistoryReducer";
 
 // ICONS
 import SearchIcon from "@mui/icons-material/Search";
 import VerticalIcon from "@mui/icons-material/SplitscreenOutlined";
 import HorizontalIcon from "@mui/icons-material/GridViewOutlined";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { clearHistory } from "@/store/historySlice/HistoryReducer";
 
 // TYPES
 type ItemAlign = "vertical" | "horizontal";
