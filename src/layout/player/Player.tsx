@@ -46,7 +46,7 @@ const Player = () => {
     return (
         <>
             {playlistSrc.length > 0 && (
-                <div className="w-[1340px] sticky bottom-0 h-[120px]">
+                <div className="w-[1340px] fixed bottom-0 h-[120px]">
                     <Reaplay tracks={playlistSrc}>
                         {(player: PlayerType) => {
                             useEffect(() => {
@@ -54,14 +54,14 @@ const Player = () => {
                             }, []);
 
                             useEffect(() => {
-                                if(!playerState.isPlaylist) {
-                                    player.onScrubEnd(player.trackProgress);   
+                                if (!playerState.isPlaylist) {
+                                    player.onScrubEnd(player.trackProgress);
                                 }
-                            }, [playlistSrc])
+                            }, [playlistSrc]);
 
                             useEffect(() => {
                                 player.onScrubEnd(player.trackProgress);
-                            }, [player.isRepeat])
+                            }, [player.isRepeat]);
 
                             return (
                                 <div className="text-white w-100 bg-stone-900 border-2 border-b-0 border-red-500 rounded-t-2xl h-[100%] flex items-center justify-between px-5">

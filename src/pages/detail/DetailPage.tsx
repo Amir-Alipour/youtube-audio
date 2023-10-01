@@ -1,10 +1,10 @@
+import './DetailPage.css'
 import { useEffect, useState } from "react";
 import useQuery from "../../hooks/useQuery";
 import axios from "axios";
 import Loading from "@/components/loading/Loading";
 import viewCounter from "../../utils/viewConter";
 import HHMMSS from "../../utils/HH-MM-SS";
-
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import Description from "./Description";
@@ -17,6 +17,7 @@ import {
 } from "../../store/playerSlice/PlayerReducer";
 import toast from "react-hot-toast";
 import { addHistory } from "../../store/historySlice/HistoryReducer";
+import Wrapper from "@/components/wrapper/Wrapper";
 
 const DetailPage = () => {
     const navigate = useNavigate();
@@ -82,20 +83,24 @@ const DetailPage = () => {
                     <Loading />
                 </div>
             ) : (
-                <div className="w-[1340px] min-h-screen flex flex-col items-center pt-[120px] pb-52">
-                    <div className="w-[100%] flex justify-center">
-                        <div className="w-[70%] min-h-[400px] rounded-xl border border-stone-700 flex flex-col gap-y-4">
-                            <div className="w-100 min-h-[200px] flex gap-x-3 mt-2">
-                                <div className="w-[35%] p-3">
+                <Wrapper>
+                    <div className="w-full flex justify-center">
+                        <div className="detail_wrapper w-full lg:w-[90%] xl:w-[70%] min-h-[400px] rounded-xl border border-stone-700 flex flex-col gap-y-4">
+                            <div className="w-100 min-h-[200px] flex flex-col sm:flex-row gap-x-3">
+                                <div className="w-100 sm:w-[50%] md:w-[35%] p-3">
                                     <img
-                                        className="w-100 h-[100%] rounded-lg"
+                                        className="w-full h-[100%] rounded-lg"
                                         src={
-                                            audio.videoDetail.thumbnail.thumbnails.filter(
-                                                (tumb) =>
-                                                    tumb.width === 1920 ||
-                                                    tumb.width === 336 ||
-                                                    tumb.width === 196
-                                            )[0].url
+                                            audio.videoDetail.thumbnail.thumbnails
+                                                .filter(
+                                                    (tumb) =>
+                                                        tumb.width === 196 ||
+                                                        tumb.width === 336 ||
+                                                        tumb.width === 1920
+                                                )
+                                                .sort(
+                                                    (a, b) => b.width - a.width
+                                                )[0].url
                                         }
                                         alt={
                                             audio.videoDetail.title +
@@ -103,7 +108,7 @@ const DetailPage = () => {
                                         }
                                     />
                                 </div>
-                                <div className="w-[65%] pr-5 py-5 text-white flex flex-col justify-between">
+                                <div className="w-100 sm:w-[50%] md:w-[65%] pl-5 sm:pl-0 pr-5 py-5 text-white flex flex-col gap-y-5 sm:gap-y-0 justify-between">
                                     <div className="flex flex-col gap-y-3">
                                         <h2 className="w-100 truncate">
                                             {audio.videoDetail.title}
@@ -154,7 +159,7 @@ const DetailPage = () => {
                     </div>
                     {/* --------------------- detail section */}
 
-                    <div className="w-[70%] grid grid-cols-5 grid-rows-1 gap-4 mt-4">
+                    <div className="w-[50%] sm:w-[70%] md:w-[100%] lg:w-[80%] xl:w-[70%]  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  grid-rows-1 gap-4 mt-4">
                         {playerState.ids.includes(ID!) &&
                             playerState.playlist
                                 .filter((a) => a.videoDetail.videoId !== ID)
@@ -209,7 +214,7 @@ const DetailPage = () => {
                                 ))}
                     </div>
                     {/* --------------------- playlist section */}
-                </div>
+                </Wrapper>
             )}
         </div>
     );

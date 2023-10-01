@@ -1,0 +1,15 @@
+@media only screen and (max-width: 535px) {
+    .detail_wrapper {
+        width: 80% !important;
+    }
+  }
+@media only screen and (max-width: 430px) {
+    .detail_wrapper {
+        width: 60% !important;
+    }
+  }
+@media only screen and (max-width: 320px) {
+    .detail_wrapper {
+        width: 50% !important;
+    }
+  }
