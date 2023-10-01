@@ -26,9 +26,12 @@ const Video = ({ video }: VideoProps) => {
                 `https://y0utubeee-audiooo-api-v1.vercel.app/a@1aa1-13haf--31bbnlm/get?id=${video.videoId}`
             )
             .then((res) => {
-                if (res.data.download_link.mp4 && res.data.download_link.mp4.url.trim() !== "") {
+                if (
+                    res.data.download_link.mp4 &&
+                    res.data.download_link.mp4.url.trim() !== ""
+                ) {
                     dispatch(addToPlaylist(res.data));
-                    dispatch(addHistory(res.data))
+                    dispatch(addHistory(res.data));
                 } else {
                     toast.error("Can't crawl data of this video :(", {
                         duration: 2500,
@@ -37,7 +40,7 @@ const Video = ({ video }: VideoProps) => {
                             color: "white",
                             padding: "7px",
                             boxShadow: "7px 10px 48px 0px rgba(0,0,0,0.71)",
-                            marginTop: "10px"
+                            marginTop: "10px",
                         },
                     });
                 }
@@ -46,30 +49,31 @@ const Video = ({ video }: VideoProps) => {
     };
 
     return (
-        <div className="text-white w-full h-[200px] border border-stone-700 rounded-2xl mb-4 flex gap-x-5 hover:bg-stone-700">
-            <div className="w-[350px] h-[100%] p-3">
+        <div className="flex flex-col sm:flex-row h-[400px] sm:h-[200px] w-full max-w-[300px] sm:max-w-none text-white border border-stone-700 rounded-2xl mb-4  gap-x-5 hover:bg-stone-700">
+            <div className="lg:w-[350px] h-[100%] p-3">
                 <Link to={`/detail?id=${video.videoId}`}>
                     <img
                         src={video.thumbnail}
                         alt={video.title}
-                        className="aspect-video	 w-[100%] h-[100%] rounded-xl shadow shadow-black"
+                        className="aspect-video w-[100%] h-[100%] rounded-xl shadow shadow-black"
                     />
                 </Link>
             </div>
-            <div className="flex-1 h-[100%] p-3 py-5 pr-8">
+            <div className="w-100 sm:w-[60%] lg:flex-1 h-[100%] p-3 py-5 pr-4 md:pr-8">
                 <div className="w-full flex justify-between items-center">
                     <Link to={`/detail?id=${video.videoId}`}>
                         <h2 className="hover:text-white/75">{video.title}</h2>
                     </Link>
-                    {!ids.includes(video.videoId) ?
-                        (isLoading ? (
+                    {!ids.includes(video.videoId) ? (
+                        isLoading ? (
                             <Spinner />
                         ) : (
                             <PlaylistAddIcon
                                 onClick={handleAddToPlaylist}
                                 className="text-stone-400 icon_30_size cursor-pointer"
                             />
-                        )) : null}
+                        )
+                    ) : null}
                 </div>
                 <div className="text-sm text-stone-400 flex items-center gap-x-3 mt-1">
                     <p>{viewCounter(video.views, 0)} View</p>

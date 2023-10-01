@@ -7,19 +7,24 @@ import { AppDispatch, RootState } from "../../store/store";
 import { fetchVideos } from "../../store/resultsSlice/ResultsActions";
 import { useNavigate } from "react-router-dom";
 import { changeLastQuery } from "../../store/resultsSlice/ResultsReducer";
+import Wrapper from "@/components/wrapper/Wrapper";
 
 const ResultPage = () => {
     const navigate = useNavigate();
     const query = useQuery().get("q");
-    const {data: result, isLoading, lastQuery} = useSelector((state: RootState) => state.results)
+    const {
+        data: result,
+        isLoading,
+        lastQuery,
+    } = useSelector((state: RootState) => state.results);
     const dispatch = useDispatch<AppDispatch>();
-    
-    useEffect(() => {
-        if(!query) navigate('/');
 
-        if(!result.length || query !== lastQuery) {
-            dispatch(fetchVideos(query!))
-            dispatch(changeLastQuery(query!))
+    useEffect(() => {
+        if (!query) navigate("/");
+
+        if (!result.length || query !== lastQuery) {
+            dispatch(fetchVideos(query!));
+            dispatch(changeLastQuery(query!));
         }
     }, [query]);
 
@@ -30,11 +35,11 @@ const ResultPage = () => {
                     <Loading />
                 </div>
             ) : (
-                <div className="w-[1340px] min-h-screen flex flex-col items-center pt-[120px] pb-52">
+                <Wrapper>
                     {result.map((video) => (
                         <Video key={video.videoId} video={video} />
                     ))}
-                </div>
+                </Wrapper>
             )}
         </div>
     );

@@ -19,9 +19,9 @@ const Header = () => {
     };
 
     return (
-        <header className="w-[1340px] h-[70px] absolute l-0 r-0 ml-auto mr-auto top-3 border-b border-b-stone-800 m-auto flex items-center justify-between  text-sm text-stone-400">
+        <header className="w-[100%] max-w-[1340px] h-[70px] absolute l-0 r-0 ml-auto mr-auto top-3 border-b border-b-stone-800 m-auto flex items-center justify-between  text-sm text-stone-400">
             {location.pathname === "/" ? null : (
-                <div className="absolute left-3">
+                <div className="hidden md:block absolute left-3">
                     <img
                         src="/icons/back-button.svg"
                         alt="back button"
@@ -39,12 +39,12 @@ const Header = () => {
                     {({ isActive }) => (
                         <>
                             <div
-                                className={`flex items-center relative top-2 -left-2 ${
+                                className={`flex items-center relative top-2 sm:-left-2 ${
                                     isActive ? "text-red-500" : ""
                                 }`}
                             >
                                 <SearchIcon />
-                                <p className="ml-2">Search</p>
+                                <p className="ml-2 hidden sm:block">Search</p>
                             </div>
                             <div
                                 className={`w-4 h-1.5 rounded-lg ${
@@ -62,12 +62,12 @@ const Header = () => {
                     {({ isActive }) => (
                         <>
                             <div
-                                className={`flex items-center relative top-2 -left-2 ${
+                                className={`flex items-center relative top-2 sm:-left-2 ${
                                     isActive ? "text-red-500" : ""
                                 }`}
                             >
                                 <HistoryIcon />
-                                <p className="ml-2">History</p>
+                                <p className="ml-2 hidden sm:block">History</p>
                             </div>
                             <div
                                 className={`w-4 h-1.5 rounded-lg ${
@@ -85,12 +85,12 @@ const Header = () => {
                     {({ isActive }) => (
                         <>
                             <div
-                                className={`flex items-center relative top-2 -left-2 ${
+                                className={`flex items-center relative top-2 sm:-left-2 ${
                                     isActive ? "text-red-500" : ""
                                 }`}
                             >
                                 <VideoLibraryOutlinedIcon />
-                                <p className="ml-2">Playlist</p>
+                                <p className="ml-2 hidden sm:block">Playlist</p>
                             </div>
                             <div
                                 className={`w-4 h-1.5 rounded-lg ${
@@ -104,7 +104,7 @@ const Header = () => {
 
             {location.pathname === "/" ? null : (
                 <div
-                    className={`absolute right-0 flex items-center justify-between fw-full border border-stone-700 rounded-xl h-[65%] w-[300px] pr-5`}
+                    className={`hidden lg:flex absolute right-2 items-center justify-between fw-full border border-stone-700 rounded-xl h-[65%] w-[300px] pr-5`}
                 >
                     <input
                         value={searchText}

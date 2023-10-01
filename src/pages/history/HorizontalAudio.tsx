@@ -12,7 +12,7 @@ const HorizontalAudio = ({ audio }: HorizontalAudioProps) => {
     return (
         <div
             onClick={() => navigate(`/detail?id=${audio.videoDetail.videoId}`)}
-            className="rounded-xl p-4 border border-stone-700 flex flex-col hover:bg-stone-700 cursor-pointer"
+            className="min-h-[230px] sm:min-h-[300px] md:min-h-0 rounded-xl p-2 sm:p-4 border border-stone-700 flex flex-col justify-between hover:bg-stone-700 cursor-pointer"
         >
             <img
                 className="rounded-xl"

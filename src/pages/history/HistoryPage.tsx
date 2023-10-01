@@ -11,6 +11,7 @@ import { clearHistory } from "@/store/historySlice/HistoryReducer";
 import SearchIcon from "@mui/icons-material/Search";
 import VerticalIcon from "@mui/icons-material/SplitscreenOutlined";
 import HorizontalIcon from "@mui/icons-material/GridViewOutlined";
+import Wrapper from "@/components/wrapper/Wrapper";
 
 // TYPES
 type ItemAlign = "vertical" | "horizontal";
@@ -42,12 +43,12 @@ const HistoryPage = () => {
     };
 
     return (
-        <div className="w-[1340px] min-h-screen flex flex-col items-center pt-[120px] pb-52">
-            <div className="w-full flex items-center justify-between">
-                <div className="flex items-center gap-x-4">
+        <Wrapper>
+            <div className="w-full flex flex-col-reverse sm:flex-row gap-y-5 sm:gap-0 items-start sm:items-center justify-between">
+                <div className="flex flex-col-reverse sm:flex-row gap-y-3 sm:gap-y-0 items-start sm:items-center gap-x-4">
                     <div
                         onClick={() => handleClearHistory()}
-                        className="cursor-pointer p-3 flex items-center  text-red-500 border border-red-500  rounded-lg"
+                        className="text-xs lg:text-base cursor-pointer p-2 lg:p-3 flex items-center  text-red-500 border border-red-500  rounded-lg"
                     >
                         <p>Clear History</p>
                     </div>
@@ -78,7 +79,7 @@ const HistoryPage = () => {
                 </div>
 
                 <div
-                    className={`flex items-center justify-between fw-full border border-stone-700 rounded-xl h-[50px] w-[300px] pl-3`}
+                    className={`flex items-center justify-between fw-full border border-stone-700 rounded-xl h-[50px] w-[100%] sm:w-[300px] pl-3`}
                 >
                     <SearchIcon className="text-red-500 mt-0.5" />
                     <input
@@ -100,8 +101,8 @@ const HistoryPage = () => {
                     <div
                         className={`w-full mt-8 grid  ${
                             itemsAlign === "vertical"
-                                ? "grid-cols-1 gap-4"
-                                : "grid-cols-5 gap-6"
+                                ? "grid-cols-1 gap-4 place-items-center"
+                                : "grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6"
                         }`}
                     >
                         {[...searchedHistory]
@@ -122,7 +123,7 @@ const HistoryPage = () => {
                     </div>
                 )}
             </div>
-        </div>
+        </Wrapper>
     );
 };
 
