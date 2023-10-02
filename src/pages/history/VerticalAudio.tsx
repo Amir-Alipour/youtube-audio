@@ -17,12 +17,14 @@ const VerticalAudio = ({ audio }: VerticalAudioProps) => {
             <div className="lg:w-[350px] h-[100%] p-3">
                 <img
                     src={
-                        audio.videoDetail.thumbnail.thumbnails.filter(
-                            (tumb) =>
-                                tumb.width === 1920 ||
-                                tumb.width === 336 ||
-                                tumb.width === 196
-                        )[0].url
+                        audio.videoDetail.thumbnail.thumbnails
+                            .filter(
+                                (tumb) =>
+                                    tumb.width === 1920 ||
+                                    tumb.width === 336 ||
+                                    tumb.width === 196
+                            )
+                            .sort((a, b) => b.width - a.width)[0].url
                     }
                     alt={audio.videoDetail.title}
                     className="aspect-audio	 w-[100%] h-[100%] rounded-xl shadow shadow-black"

@@ -17,12 +17,14 @@ const HorizontalAudio = ({ audio }: HorizontalAudioProps) => {
             <img
                 className="rounded-xl"
                 src={
-                    audio.videoDetail.thumbnail.thumbnails.filter(
-                        (tumb) =>
-                            tumb.width === 1920 ||
-                            tumb.width === 336 ||
-                            tumb.width === 196
-                    )[0].url
+                    audio.videoDetail.thumbnail.thumbnails
+                        .filter(
+                            (tumb) =>
+                                tumb.width === 1920 ||
+                                tumb.width === 336 ||
+                                tumb.width === 196
+                        )
+                        .sort((a, b) => b.width - a.width)[0].url
                 }
                 alt={audio.videoDetail.title + "thumbnail"}
             />
