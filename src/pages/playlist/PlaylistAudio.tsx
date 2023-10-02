@@ -27,31 +27,33 @@ const PlaylistAudio = ({
     return (
         <div
             // onClick={() => navigate(`/detail?id=${audio.videoDetail.videoId}`)}
-            className="cursor-pointer text-white w-full h-[200px] border border-stone-700 rounded-2xl flex gap-x-1 hover:bg-stone-700"
+            className="flex flex-col sm:flex-row h-[400px] sm:h-[200px] w-full max-w-[300px] sm:max-w-none cursor-pointer text-white border border-stone-700 rounded-2xl mb-4  gap-x-5 hover:bg-stone-700"
         >
-            <div className="w-[330px] h-[100%] p-3">
+            <div className="lg:w-[350px] h-[100%] p-3">
                 <img
                     src={
-                        audio.videoDetail.thumbnail.thumbnails.filter(
-                            (tumb) =>
-                                tumb.width === 1920 ||
-                                tumb.width === 336 ||
-                                tumb.width === 196
-                        )[0].url
+                        audio.videoDetail.thumbnail.thumbnails
+                            .filter(
+                                (tumb) =>
+                                    tumb.width === 1920 ||
+                                    tumb.width === 336 ||
+                                    tumb.width === 196
+                            )
+                            .sort((a, b) => b.width - a.width)[0].url
                     }
                     alt={audio.videoDetail.title}
                     className="aspect-audio	 w-[100%] h-[100%] rounded-xl shadow shadow-black"
                 />
             </div>
-            <div className="flex-1 h-[100%] p-3 py-5 pr-8">
-                <div className="w-full flex justify-between items-center">
-                    <h2 className="hover:text-white/75 mt-2">
+            <div className="w-100 sm:w-[60%] lg:flex-1 h-[100%] pt-1 pl-5 sm:pl-0 py-5 pr-4 md:pr-8">
+                <div className="w-full relative flex justify-between items-center">
+                    <h2 className="hover:text-white/75 mt-2 w-[90%]">
                         {audio.videoDetail.title}
                     </h2>
                     <RemoveIcon
                         onClick={() => handleRemove(audio.videoDetail.videoId)}
                         style={{ fontSize: "33px" }}
-                        className="rotate-45"
+                        className="rotate-45 absolute  top-[90px] sm:top-5 right-0 sm:-right-3"
                     />
                 </div>
                 <div className="text-sm text-stone-400 flex items-center gap-x-3 mt-1">
