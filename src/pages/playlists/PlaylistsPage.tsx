@@ -6,15 +6,16 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-
-// ICONS
-import SearchIcon from "@mui/icons-material/Search";
-import AddIcon from "@mui/icons-material/Add";
 import { ChangeEvent, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPlaylist } from "@/store/playlistSlice/PlaylistReducer";
 import { RootState } from "@/store/store";
 import { useNavigate } from "react-router-dom";
+import Wrapper from "@/components/wrapper/Wrapper";
+
+// ICONS
+import SearchIcon from "@mui/icons-material/Search";
+import AddIcon from "@mui/icons-material/Add";
 
 const PlaylistsPage = () => {
     const navigate = useNavigate();
@@ -54,8 +55,8 @@ const PlaylistsPage = () => {
     }, [playlists]);
 
     return (
-        <div className="w-[1340px] min-h-screen flex flex-col items-center pt-[120px] pb-52">
-            <div className="w-full flex items-center justify-between">
+        <Wrapper>
+            <div className="w-full flex flex-col-reverse sm:flex-row gap-y-4 sm:gap-y-0 items-center justify-between">
                 <div>
                     <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
@@ -111,14 +112,14 @@ const PlaylistsPage = () => {
             </div>
             {/* HEADER */}
 
-            <div className="w-full mt-7 grid grid-cols-6 gap-7">
+            <div className="w-full mt-7 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-7">
                 {[...searchedPlaylist].map((playlist, i) => (
                     <div
                         onClick={() =>
                             navigate(`/playlists/${playlist.playlist_name}`)
                         }
                         key={i}
-                        className="h-[260px] p-4 rounded-2xl border border-stone-700 hover:bg-stone-800 cursor-pointer"
+                        className="h-[350px] md:h-[260px] p-4 rounded-2xl border border-stone-700 hover:bg-stone-800 cursor-pointer flex flex-col justify-between"
                     >
                         {playlist.thumnail ? (
                             <img
@@ -140,7 +141,7 @@ const PlaylistsPage = () => {
                     </div>
                 ))}
             </div>
-        </div>
+        </Wrapper>
     );
 };
 
