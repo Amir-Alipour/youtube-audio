@@ -129,7 +129,7 @@ const PlaylistPage = () => {
                         )}
                         <div className="relative min-h-[70px] flex items-center justify-between gap-x-3">
                             <h4 className="max-w-[75%] ml-1 line-clamp-2 text-white mt-3 text-lg">
-                                {playlist?.title} kjhsdjkf jhakjsdfh ddf sdkfklad hadkjfh sdfas
+                                {playlist?.title}
                             </h4>
                             <DropdownMenu>
                                 <DropdownMenuTrigger>
