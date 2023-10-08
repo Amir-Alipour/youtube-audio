@@ -1,4 +1,5 @@
 import "./Player.css";
+import "./PlayerResponsive.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { PlayerType, Reaplay } from "reaplay";
@@ -6,6 +7,12 @@ import { useEffect, useRef, useState } from "react";
 import HHMMSS from "../../utils/HH-MM-SS";
 import { Link } from "react-router-dom";
 import PlayerPlaylist from "./PlayerPlaylist";
+import {
+    Menu,
+    MenuButton,
+    MenuContent,
+    MenuItem,
+} from "@/components/menu/Menu";
 
 // ICONS
 import PlayIcon from "@mui/icons-material/PlayArrowOutlined";
@@ -17,10 +24,14 @@ import ShuffleIcon from "@mui/icons-material/ShuffleOutlined";
 import VolumeIcon from "@mui/icons-material/VolumeUpOutlined";
 import VolumeOffIcon from "@mui/icons-material/VolumeOffOutlined";
 import QueueMusicIcon from "@mui/icons-material/QueueMusicOutlined";
+import MoreIcon from "@mui/icons-material/MoreHoriz";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAddOutlined";
 
 const Player = () => {
     const playerState = useSelector((state: RootState) => state.player);
     const [playlistSrc, setPlayingSrc] = useState<string[]>([]);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    // const [playlistDrawerOpen, setPlaylistDrawerOpen] = useState<boolean>(false);
 
     const indexBtn = useRef<HTMLButtonElement>(null);
     const playlistIndexBtn = useRef<HTMLButtonElement>(null);
@@ -46,7 +57,7 @@ const Player = () => {
     return (
         <>
             {playlistSrc.length > 0 && (
-                <div className="w-[1340px] fixed bottom-0 h-[120px]">
+                <div className="w-full sm:w-[650px] md:w-[800px] lg:w-[1050px] xl:w-[1340px] fixed bottom-0 h-[120px]">
                     <Reaplay tracks={playlistSrc}>
                         {(player: PlayerType) => {
                             useEffect(() => {
@@ -64,7 +75,7 @@ const Player = () => {
                             }, [player.isRepeat]);
 
                             return (
-                                <div className="text-white w-100 bg-stone-900 border-2 border-b-0 border-red-500 rounded-t-2xl h-[100%] flex items-center justify-between px-5">
+                                <div className="player-wrapper text-white w-100 bg-stone-900 border-2 border-b-0 border-red-500 rounded-t-2xl h-[100%] flex items-center justify-between px-5">
                                     <button
                                         ref={indexBtn}
                                         onClick={() =>
@@ -82,14 +93,14 @@ const Player = () => {
                                         }}
                                         className="hidden"
                                     ></button>
-                                    <div className="flex flex-col w-[33%]">
+                                    <div className="detail-container w-[25%] lg:w-[33%] flex flex-col">
                                         <Link
                                             to={`/detail?id=${
                                                 playerState.playlist[
                                                     player.trackIndex
                                                 ]?.videoDetail.videoId
                                             }`}
-                                            className="truncate w-[80%]"
+                                            className="line-clamp-2 md:line-clamp-1 w-[80%]"
                                         >
                                             {
                                                 playerState.playlist[
@@ -97,7 +108,7 @@ const Player = () => {
                                                 ]?.videoDetail.title
                                             }
                                         </Link>
-                                        <p className="mt-1 text-stone-400 text-sm">
+                                        <p className="hidden md:block mt-1 text-stone-400 text-sm">
                                             {
                                                 playerState.playlist[
                                                     player.trackIndex
@@ -107,7 +118,7 @@ const Player = () => {
                                     </div>
                                     {/* Audio Detail */}
 
-                                    <div className="w-[33%] flex flex-col items-center ">
+                                    <div className="controllers-container w-[60%] sm:w-[41%] lg:w-[33%] flex flex-col items-center ">
                                         <div className="flex gap-x-5 cursor-pointer items-center">
                                             <ShuffleIcon
                                                 className={`icon_25_size ${
@@ -201,8 +212,68 @@ const Player = () => {
                                     </div>
                                     {/* Player Buttons */}
 
-                                    <div className="w-[33%] flex items-center justify-end gap-x-5 mr-2">
+                                    <div className="options-container w-[12%] flex flex-col sm:hidden items-center justify-end gap-y-2">
+                                        <div className="dropdownVolume">
+                                            <div
+                                                onClick={() =>
+                                                    player.isMute
+                                                        ? player.unmute()
+                                                        : player.mute()
+                                                }
+                                                className="cursor-pointer flex items-center justify-center w-10 h-10 rounded-lg border border-stone-600 hover:bg-stone-600"
+                                            >
+                                                {player.isMute ? (
+                                                    <VolumeOffIcon className="dropbtn text-stone-300" />
+                                                ) : (
+                                                    <VolumeIcon className="dropbtn text-stone-300" />
+                                                )}
+                                            </div>
+                                            <div className="dropdown-content">
+                                                <p className="text-xs text-stone-400">
+                                                    {player.volume}%
+                                                </p>
+                                                <input
+                                                    type="range"
+                                                    className="volume bg-transparent"
+                                                    value={player.volume}
+                                                    step="1"
+                                                    min="0"
+                                                    max="100"
+                                                    onChange={(e) =>
+                                                        player.setVolume(
+                                                            +e.target.value
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                        <Menu>
+                                            <MenuButton>
+                                                <button className="cus-drp-btn cursor-pointer flex items-center justify-center w-10 h-10 rounded-lg border border-stone-600 hover:bg-stone-600">
+                                                    <MoreIcon className="cus-drp-btn w-full h-[40px]" />
+                                                </button>
+                                            </MenuButton>
+                                            <MenuContent>
+                                                <MenuItem>
+                                                    <QueueMusicIcon />
+                                                    Queue
+                                                </MenuItem>
+                                                <MenuItem
+                                                    onClick={() =>
+                                                        setIsModalOpen(true)
+                                                    }
+                                                >
+                                                    <PlaylistAddIcon />
+                                                    Add To Playlist
+                                                </MenuItem>
+                                            </MenuContent>
+                                        </Menu>
+                                    </div>
+
+                                    <div className="w-[33%] hidden sm:flex items-center justify-end gap-x-5 mr-2">
                                         <PlayerPlaylist
+                                            open={isModalOpen}
+                                            setOpen={setIsModalOpen}
                                             currentAudioID={
                                                 playerState.playlist[
                                                     player.trackIndex
@@ -341,6 +412,7 @@ const Player = () => {
                                             </div>
                                         </div>
                                     </div>
+
                                     {/* Playlist Options */}
                                 </div>
                             );

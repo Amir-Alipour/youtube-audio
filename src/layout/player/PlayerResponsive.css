@@ -1,0 +1,28 @@
+@media only screen and (max-width: 1535px) {
+    .dropdownQueue .dropdown-content {
+        left: -270px;
+    }
+
+    .dropdownQueue .dropdown-content:after {
+        left: 180px;
+    }
+}
+
+@media only screen and (max-width: 525px) {
+    .detail-container {
+        display: none !important;
+    }
+
+    .controllers-container {
+        width: 85% !important;
+    }
+
+    .options-container {
+        width: 10% !important;
+    }
+}
+@media only screen and (max-width: 365px) {
+    .controllers-container {
+        width: 80% !important;
+    }
+}

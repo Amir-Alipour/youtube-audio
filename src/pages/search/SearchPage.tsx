@@ -34,7 +34,7 @@ const SearchPage = () => {
     };
 
     return (
-        <div className="bg-[url('/pattern/search-pattern-rotate.svg')] lg:bg-[url('/pattern/search-pattern-full.svg')] bg-cover lg:bg-contain bg-center bg-no-repeat w-full h-[100vh] flex flex-col items-center justify-center gap-y-5 mt-4 md:mt-0">
+        <div className="bg-[url('/pattern/search-pattern-rotate.svg')] lg:bg-[url('/pattern/search-pattern-full.svg')] bg-cover lg:bg-contain bg-center bg-no-repeat w-full h-[100svh] flex flex-col items-center justify-center gap-y-5 mt-4 md:mt-0">
             <img
                 className="w-[200px] lg:w-[250px]"
                 src="/logo/logo-horizontal-fill.svg"

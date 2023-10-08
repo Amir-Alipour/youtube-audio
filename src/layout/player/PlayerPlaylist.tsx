@@ -13,22 +13,27 @@ import {
 
 import { RootState } from "@/store/store";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAddOutlined";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 type PlayerPlaylistProps = {
     currentAudioID: string;
     currentAudio: Audio;
+    hideTrigger?: boolean;
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const PlayerPlaylist = ({
     currentAudioID,
     currentAudio,
+    hideTrigger = false,
+    open,
+    setOpen,
 }: PlayerPlaylistProps) => {
     const dispatch = useDispatch();
     let playlists = useSelector((state: RootState) => state.playlist.playlists);
     const [onAddingNew, setOnAddingNew] = useState<boolean>(false);
-    const [open, setOpen] = useState(false);
     const [playListName, setPlayListName] = useState("");
     // STATES
 
@@ -67,11 +72,19 @@ const PlayerPlaylist = ({
     }, [open]);
 
     return (
-        <div className=" cursor-pointer flex items-center justify-center w-10 h-10 rounded-lg border border-stone-600 hover:bg-stone-600">
+        <div
+            className={`${
+                !hideTrigger &&
+                "cursor-pointer flex items-center justify-center w-10 h-10 rounded-lg border border-stone-600 hover:bg-stone-600"
+            } `}
+        >
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild>
-                    <PlaylistAddIcon className="text-stone-300" />
-                </DialogTrigger>
+                {!hideTrigger && (
+                    <DialogTrigger asChild>
+                        <PlaylistAddIcon className="text-stone-300" />
+                    </DialogTrigger>
+                )}
+
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
                         <DialogTitle className="text-white">
@@ -169,4 +182,4 @@ const PlayerPlaylist = ({
     );
 };
 
-export default PlayerPlaylist;
+export default memo(PlayerPlaylist);
