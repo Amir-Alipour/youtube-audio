@@ -1,3 +1,4 @@
+import './PlaylistPage.css'
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PlaylistAudio from "./PlaylistAudio";
@@ -117,11 +118,11 @@ const PlaylistPage = () => {
                         {playlist?.thumnail ? (
                             <img
                                 src={playlist.thumnail}
-                                className="object-cover rounded-xl	w-full h-[60%]"
+                                className="object-cover rounded-xl w-full h-[60%]"
                                 alt={playlist.title}
                             />
                         ) : (
-                            <div className="w-full flex items-center justify-center h-[60%] rounded-xl bg-stone-800">
+                            <div className="thumnail_cover w-[270px] flex items-center justify-center h-[60%] rounded-xl bg-stone-800">
                                 <p className="text-6xl font-bold">
                                     {playlist?.title[0]}
                                 </p>

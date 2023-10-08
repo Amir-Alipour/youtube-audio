@@ -1,0 +1,5 @@
+@media only screen and (max-width: 300px) {
+    .thumnail_cover {
+        width: 230px !important;
+    }
+}
