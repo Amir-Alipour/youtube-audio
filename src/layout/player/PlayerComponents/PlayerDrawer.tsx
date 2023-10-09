@@ -49,7 +49,7 @@ const PlayerDrawer = ({
                                     indexIsPlaying ? "bg-stone-700" : ""
                                 }`}
                             >
-                                <div className="w-[60px] flex items-center justify-center">
+                                <div className="w-[40px] flex items-center justify-center">
                                     {indexIsPlaying ? (
                                         isPlaying ? (
                                             <PauseIcon
@@ -68,24 +68,25 @@ const PlayerDrawer = ({
                                 </div>
                                 <div
                                     onClick={() => setIndex(i)}
-                                    className="flex w-full items-center justify-center"
+                                    className="flex flex-1 items-center justify-between"
                                 >
-                                    <div className="w-[90%] -ml-2 flex flex-col gap-y-2">
-                                        <p className="w-[190px] text-md relative top-1.5 truncate text-stone-100">
+                                    <div className="w-100 flex flex-col gap-y-2 pr-2">
+                                        <p className="line-clamp-1 w-full text-xs sm:text-md relative top-1.5  text-stone-100">
                                             {track?.videoDetail.title}
                                         </p>
-                                        <p className="text-sm relative bottom-1.5  text-stone-400">
+                                        <div className="flex justify-between items-center">
+                                        <p className="text-[12px] relative text-stone-400">
                                             {track?.videoDetail.author}
                                         </p>
-                                    </div>
-                                    <div className="w-[10%] relative -left-5 text-stone-400">
-                                        <p className="text-sm">
+                                        <p className="text-xs text-stone-400">
                                             {HHMMSS(
                                                 +track?.videoDetail
                                                     .lengthSeconds
                                             )}
                                         </p>
+                                        </div>
                                     </div>
+                                   
                                 </div>
                             </div>
                         );
