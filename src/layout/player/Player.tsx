@@ -4,9 +4,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { PlayerType, Reaplay } from "reaplay";
 import { useEffect, useRef, useState } from "react";
-import HHMMSS from "../../utils/HH-MM-SS";
 import { Link } from "react-router-dom";
-import PlayerPlaylist from "./PlayerPlaylist";
+import PlayerPlaylist from "./PlayerComponents/PlayerPlaylist";
 import {
     Menu,
     MenuButton,
@@ -21,12 +20,12 @@ import PrevIcon from "@mui/icons-material/SkipPreviousOutlined";
 import NextIcon from "@mui/icons-material/SkipNextOutlined";
 import RepeatIcon from "@mui/icons-material/RepeatOutlined";
 import ShuffleIcon from "@mui/icons-material/ShuffleOutlined";
-import VolumeIcon from "@mui/icons-material/VolumeUpOutlined";
-import VolumeOffIcon from "@mui/icons-material/VolumeOffOutlined";
 import QueueMusicIcon from "@mui/icons-material/QueueMusicOutlined";
 import MoreIcon from "@mui/icons-material/MoreHoriz";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAddOutlined";
-import PlayerDrawer from "./PlayerDrawer";
+import PlayerDrawer from "./PlayerComponents/PlayerDrawer";
+import PlayerVolume from "./PlayerComponents/PlayerVolume";
+import PlayerDropdownQueue from "./PlayerComponents/PlayerDropdownQueue";
 
 const Player = () => {
     const playerState = useSelector((state: RootState) => state.player);
@@ -226,40 +225,15 @@ const Player = () => {
                                             index={player.trackIndex}
                                             isPlaying={player.isPlaying}
                                         />
-                                        <div className="dropdownVolume">
-                                            <div
-                                                onClick={() =>
-                                                    player.isMute
-                                                        ? player.unmute()
-                                                        : player.mute()
-                                                }
-                                                className="cursor-pointer flex items-center justify-center w-10 h-10 rounded-lg border border-stone-600 hover:bg-stone-600"
-                                            >
-                                                {player.isMute ? (
-                                                    <VolumeOffIcon className="dropbtn text-stone-300" />
-                                                ) : (
-                                                    <VolumeIcon className="dropbtn text-stone-300" />
-                                                )}
-                                            </div>
-                                            <div className="dropdown-content">
-                                                <p className="text-xs text-stone-400">
-                                                    {player.volume}%
-                                                </p>
-                                                <input
-                                                    type="range"
-                                                    className="volume bg-transparent"
-                                                    value={player.volume}
-                                                    step="1"
-                                                    min="0"
-                                                    max="100"
-                                                    onChange={(e) =>
-                                                        player.setVolume(
-                                                            +e.target.value
-                                                        )
-                                                    }
-                                                />
-                                            </div>
-                                        </div>
+                                        <PlayerVolume
+                                            isMute={player.isMute}
+                                            mute={() => player.mute()}
+                                            unmute={() => player.unmute()}
+                                            volume={player.volume}
+                                            setVolume={(vol: number) =>
+                                                player.setVolume(vol)
+                                            }
+                                        />
                                         <Menu>
                                             <MenuButton>
                                                 <button className="cus-drp-btn cursor-pointer flex items-center justify-center w-10 h-10 rounded-lg border border-stone-600 hover:bg-stone-600">
@@ -303,131 +277,26 @@ const Player = () => {
                                             }
                                         />
 
-                                        <div className="dropdownQueue">
-                                            <div className=" cursor-pointer flex items-center justify-center w-10 h-10 rounded-lg border border-stone-600 hover:bg-stone-600">
-                                                <QueueMusicIcon className="text-stone-300" />
-                                            </div>
-                                            <div className="dropdown-content p-3 px-4">
-                                                <h3 className="text-xl font-bold text-white">
-                                                    Queue
-                                                </h3>
-                                                <div className="mt-3 w-full flex flex-1 flex-col gap-y-3 queueList">
-                                                    {playerState.playlist.map(
-                                                        (track, index) => {
-                                                            const indexIsPlaying =
-                                                                player.trackIndex ===
-                                                                index;
+                                        <PlayerDropdownQueue
+                                            queue={playerState.playlist}
+                                            play={() => player.play()}
+                                            pause={() => player.pause()}
+                                            setIndex={(i) =>
+                                                player.setTrackIndex(i)
+                                            }
+                                            index={player.trackIndex}
+                                            isPlaying={player.isPlaying}
+                                        />
 
-                                                            return (
-                                                                <div
-                                                                    key={
-                                                                        track
-                                                                            ?.videoDetail
-                                                                            .videoId
-                                                                    }
-                                                                    className={`cursor-pointer w-100 flex justify-center border border-stone-700 rounded-lg py-1.5 ${
-                                                                        indexIsPlaying
-                                                                            ? "bg-stone-700"
-                                                                            : ""
-                                                                    }`}
-                                                                >
-                                                                    <div className="w-[60px] flex items-center justify-center">
-                                                                        {indexIsPlaying ? (
-                                                                            player.isPlaying ? (
-                                                                                <PauseIcon
-                                                                                    onClick={() =>
-                                                                                        player.pause()
-                                                                                    }
-                                                                                    className="icon_30_size text-red-500"
-                                                                                />
-                                                                            ) : (
-                                                                                <PlayIcon
-                                                                                    onClick={() =>
-                                                                                        player.play()
-                                                                                    }
-                                                                                    className="icon_30_size text-red-500"
-                                                                                />
-                                                                            )
-                                                                        ) : (
-                                                                            <PlayIcon className="icon_30_size text-red-500" />
-                                                                        )}
-                                                                    </div>
-                                                                    <div
-                                                                        onClick={() =>
-                                                                            player.setTrackIndex(
-                                                                                index
-                                                                            )
-                                                                        }
-                                                                        className="flex flex-1 -mt-3 items-center justify-center"
-                                                                    >
-                                                                        <div className="w-[90%] flex flex-col">
-                                                                            <p className="w-[220px] text-md relative top-1.5 truncate text-stone-100">
-                                                                                {
-                                                                                    track
-                                                                                        ?.videoDetail
-                                                                                        .title
-                                                                                }
-                                                                            </p>
-                                                                            <p className="text-sm relative bottom-1.5  text-stone-400">
-                                                                                {
-                                                                                    track
-                                                                                        ?.videoDetail
-                                                                                        .author
-                                                                                }
-                                                                            </p>
-                                                                        </div>
-                                                                        <div className="w-[10%] relative -left-6 text-stone-400">
-                                                                            <p className="text-sm">
-                                                                                {HHMMSS(
-                                                                                    +track
-                                                                                        ?.videoDetail
-                                                                                        .lengthSeconds
-                                                                                )}
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            );
-                                                        }
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="dropdownVolume">
-                                            <div
-                                                onClick={() =>
-                                                    player.isMute
-                                                        ? player.unmute()
-                                                        : player.mute()
-                                                }
-                                                className="cursor-pointer flex items-center justify-center w-10 h-10 rounded-lg border border-stone-600 hover:bg-stone-600"
-                                            >
-                                                {player.isMute ? (
-                                                    <VolumeOffIcon className="dropbtn text-stone-300" />
-                                                ) : (
-                                                    <VolumeIcon className="dropbtn text-stone-300" />
-                                                )}
-                                            </div>
-                                            <div className="dropdown-content">
-                                                <p className="text-xs text-stone-400">
-                                                    {player.volume}%
-                                                </p>
-                                                <input
-                                                    type="range"
-                                                    className="volume bg-transparent"
-                                                    value={player.volume}
-                                                    step="1"
-                                                    min="0"
-                                                    max="100"
-                                                    onChange={(e) =>
-                                                        player.setVolume(
-                                                            +e.target.value
-                                                        )
-                                                    }
-                                                />
-                                            </div>
-                                        </div>
+                                        <PlayerVolume
+                                            isMute={player.isMute}
+                                            mute={() => player.mute()}
+                                            unmute={() => player.unmute()}
+                                            volume={player.volume}
+                                            setVolume={(vol: number) =>
+                                                player.setVolume(vol)
+                                            }
+                                        />
                                     </div>
 
                                     {/* Playlist Options */}
