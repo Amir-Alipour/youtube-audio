@@ -26,12 +26,13 @@ import VolumeOffIcon from "@mui/icons-material/VolumeOffOutlined";
 import QueueMusicIcon from "@mui/icons-material/QueueMusicOutlined";
 import MoreIcon from "@mui/icons-material/MoreHoriz";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAddOutlined";
+import PlayerDrawer from "./PlayerDrawer";
 
 const Player = () => {
     const playerState = useSelector((state: RootState) => state.player);
     const [playlistSrc, setPlayingSrc] = useState<string[]>([]);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    // const [playlistDrawerOpen, setPlaylistDrawerOpen] = useState<boolean>(false);
+    const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
     const indexBtn = useRef<HTMLButtonElement>(null);
     const playlistIndexBtn = useRef<HTMLButtonElement>(null);
@@ -213,6 +214,18 @@ const Player = () => {
                                     {/* Player Buttons */}
 
                                     <div className="options-container w-[12%] flex flex-col sm:hidden items-center justify-end gap-y-2">
+                                        <PlayerDrawer
+                                            open={isDrawerOpen}
+                                            onChange={setIsDrawerOpen}
+                                            queue={playerState.playlist}
+                                            play={() => player.play()}
+                                            pause={() => player.pause()}
+                                            setIndex={(i) =>
+                                                player.setTrackIndex(i)
+                                            }
+                                            index={player.trackIndex}
+                                            isPlaying={player.isPlaying}
+                                        />
                                         <div className="dropdownVolume">
                                             <div
                                                 onClick={() =>
@@ -254,7 +267,11 @@ const Player = () => {
                                                 </button>
                                             </MenuButton>
                                             <MenuContent>
-                                                <MenuItem>
+                                                <MenuItem
+                                                    onClick={() => {
+                                                        setIsDrawerOpen(true);
+                                                    }}
+                                                >
                                                     <QueueMusicIcon />
                                                     Queue
                                                 </MenuItem>
