@@ -12,6 +12,10 @@ import {
     MenuContent,
     MenuItem,
 } from "@/components/menu/Menu";
+import PlayerDrawer from "./PlayerComponents/PlayerDrawer";
+import PlayerVolume from "./PlayerComponents/PlayerVolume";
+import PlayerDropdownQueue from "./PlayerComponents/PlayerDropdownQueue";
+
 
 // ICONS
 import PlayIcon from "@mui/icons-material/PlayArrowOutlined";
@@ -23,9 +27,7 @@ import ShuffleIcon from "@mui/icons-material/ShuffleOutlined";
 import QueueMusicIcon from "@mui/icons-material/QueueMusicOutlined";
 import MoreIcon from "@mui/icons-material/MoreHoriz";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAddOutlined";
-import PlayerDrawer from "./PlayerComponents/PlayerDrawer";
-import PlayerVolume from "./PlayerComponents/PlayerVolume";
-import PlayerDropdownQueue from "./PlayerComponents/PlayerDropdownQueue";
+
 
 const Player = () => {
     const playerState = useSelector((state: RootState) => state.player);
@@ -66,13 +68,9 @@ const Player = () => {
 
                             useEffect(() => {
                                 if (!playerState.isPlaylist) {
-                                    player.onScrubEnd(player.trackProgress);
+                                    player.update();
                                 }
                             }, [playlistSrc]);
-
-                            useEffect(() => {
-                                player.onScrubEnd(player.trackProgress);
-                            }, [player.isRepeat]);
 
                             return (
                                 <div className="player-wrapper text-white w-100 bg-stone-900 border-2 border-b-0 border-red-500 rounded-t-2xl h-[100%] flex items-center justify-between px-5">
