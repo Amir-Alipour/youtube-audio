@@ -11,12 +11,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-    changeIndex,
-    changePlayingPlaylist,
-} from "@/store/playerSlice/PlayerReducer";
+import { changePlayingPlaylist } from "@/store/playerSlice/PlayerReducer";
 import { RootState } from "@/store/store";
 import axios from "axios";
+import PlaylistModal from "./PlaylistModal";
+import Wrapper from "@/components/wrapper/Wrapper";
 
 // ICONS
 import MoreIcon from "@mui/icons-material/MoreHoriz";
@@ -25,8 +24,6 @@ import PlayIcon from "@mui/icons-material/PlayCircleOutline";
 import PhotoIcon from "@mui/icons-material/PhotoSizeSelectActualOutlined";
 import EditIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import PlaylistModal from "./PlaylistModal";
-import Wrapper from "@/components/wrapper/Wrapper";
 
 export type ModalMode = "cover" | "name" | "delete";
 
@@ -68,17 +65,20 @@ const PlaylistPage = () => {
     const handleShuffle = async () => {
         if (
             playerPlaylist.length !== playlist?.items.length ||
-            playerPlaylist.every(
-                (val, index) =>
-                    val.videoDetail.videoId !==
-                    playlist?.items[index].videoDetail.videoId
+            !playerPlaylist.every((val) =>
+                playlist?.items.find(
+                    (i) => i.videoDetail.videoId === val.videoDetail.videoId
+                )
             )
         ) {
             await handlePlayPlaylist();
         }
-        dispatch(
-            changeIndex(Math.floor(Math.random() * playlist?.items.length!))
-        );
+
+        const items = playlist?.items;
+        const shufflePlaylist: Audio[] | undefined = [
+            ...(items as Audio[]),
+        ].sort(() => 0.5 - Math.random());
+        dispatch(changePlayingPlaylist(shufflePlaylist!));
     };
 
     const handleUpdateData = () => {
