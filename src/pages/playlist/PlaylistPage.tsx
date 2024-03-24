@@ -11,10 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-    changeIndex,
-    changePlayingPlaylist,
-} from "@/store/playerSlice/PlayerReducer";
+import { changePlayingPlaylist } from "@/store/playerSlice/PlayerReducer";
 import { RootState } from "@/store/store";
 import axios from "axios";
 import PlaylistModal from "./PlaylistModal";
