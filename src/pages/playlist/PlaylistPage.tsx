@@ -11,7 +11,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useDispatch, useSelector } from "react-redux";
-import { changePlayingPlaylist } from "@/store/playerSlice/PlayerReducer";
+import {
+    changeIndex,
+    changePlayingPlaylist,
+} from "@/store/playerSlice/PlayerReducer";
 import { RootState } from "@/store/store";
 import axios from "axios";
 import PlaylistModal from "./PlaylistModal";
@@ -45,40 +48,38 @@ const PlaylistPage = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     // STAETS
 
-    const handlePlayPlaylist = async () => {
-        setIsLoading(true);
-        const playlistItems: Audio[] = [];
-        for (let itemIndex in playlist?.items) {
-            const vidID = playlist?.items[+itemIndex].videoDetail.videoId;
-            await axios
-                .get<Audio>(
-                    `https://y0utubeee-audiooo-api-v1.vercel.app/a@1aa1-13haf--31bbnlm/get?id=${vidID}`
-                )
-                .then((res) => {
-                    playlistItems.push(res.data);
-                });
+    const handlePlayPlaylist = async (loadPlaylist: Audio[]) => {
+        if (
+            playerPlaylist.length !== loadPlaylist.length ||
+            !playerPlaylist.every(
+                (val, idx) =>
+                    loadPlaylist[idx].videoDetail.videoId ===
+                    val.videoDetail.videoId
+            )
+        ) {
+            setIsLoading(true);
+            const playlistItems: Audio[] = [];
+            for (let itemIndex in loadPlaylist) {
+                const vidID = loadPlaylist[+itemIndex].videoDetail.videoId;
+                await axios
+                    .get<Audio>(
+                        `https://y0utubeee-audiooo-api-v1.vercel.app/a@1aa1-13haf--31bbnlm/get?id=${vidID}`
+                    )
+                    .then((res) => {
+                        playlistItems.push(res.data);
+                    });
+            }
+            setIsLoading(false);
+            dispatch(changePlayingPlaylist(playlistItems));
         }
-        setIsLoading(false);
-        dispatch(changePlayingPlaylist(playlistItems));
     };
 
     const handleShuffle = async () => {
-        if (
-            playerPlaylist.length !== playlist?.items.length ||
-            !playerPlaylist.every((val) =>
-                playlist?.items.find(
-                    (i) => i.videoDetail.videoId === val.videoDetail.videoId
-                )
-            )
-        ) {
-            await handlePlayPlaylist();
-        }
-
         const items = playlist?.items;
         const shufflePlaylist: Audio[] | undefined = [
             ...(items as Audio[]),
         ].sort(() => 0.5 - Math.random());
-        dispatch(changePlayingPlaylist(shufflePlaylist!));
+        await handlePlayPlaylist(shufflePlaylist);
     };
 
     const handleUpdateData = () => {
@@ -185,7 +186,9 @@ const PlaylistPage = () => {
                         </div>
                         <div className="mt-5 sm:mt-9 grid grid-cols-2 gap-x-5">
                             <div
-                                onClick={handlePlayPlaylist}
+                                onClick={() =>
+                                    handlePlayPlaylist(playlist?.items!)
+                                }
                                 className="cursor-pointer h-[45px] border border-stone-700 flex items-center justify-center gap-x-2 text-gray-400 text-md rounded-xl"
                             >
                                 {isLoading ? (
