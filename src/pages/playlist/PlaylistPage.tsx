@@ -1,4 +1,4 @@
-import './PlaylistPage.css'
+import "./PlaylistPage.css";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PlaylistAudio from "./PlaylistAudio";
@@ -208,7 +208,7 @@ const PlaylistPage = () => {
                     </div>
                 </div>
                 <div className="col-span-1 lg:col-span-2 xl:col-span-3 flex flex-col items-center gap-y-4">
-                    {playlist?.items.reverse().map((audio) => (
+                    {playlist?.items.map((audio) => (
                         <PlaylistAudio
                             key={audio.videoDetail.videoId}
                             audio={audio}
