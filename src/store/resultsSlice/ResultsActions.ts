@@ -6,7 +6,7 @@ export const fetchVideos = createAsyncThunk(
     async (query: string) => {
         return await axios
             .get(
-                ` http://localhost:3001/a@1aa1-13haf--31bbnlm/search?q=${query}`
+                ` https://y0utubeee-audiooo-api-v1.vercel.app/a@1aa1-13haf--31bbnlm/search?q=${query}`
             )
             .then((res: AxiosResponse) => res.data.result);
     })

@@ -35,7 +35,7 @@ const DetailPage = () => {
     useEffect(() => {
         axios
             .get<Audio>(
-                ` http://localhost:3001/a@1aa1-13haf--31bbnlm/get?id=${ID}`
+                `https://y0utubeee-audiooo-api-v1.vercel.app/a@1aa1-13haf--31bbnlm/get?id=${ID}`
             )
             .then((res) => {
                 setAudio(res.data);

@@ -60,7 +60,7 @@ const PlaylistPage = () => {
                 const vidID = loadPlaylist[+itemIndex].videoDetail.videoId;
                 await axios
                     .get<Audio>(
-                        ` http://localhost:3001/a@1aa1-13haf--31bbnlm/get?id=${vidID}`
+                        ` https://y0utubeee-audiooo-api-v1.vercel.app/a@1aa1-13haf--31bbnlm/get?id=${vidID}`
                     )
                     .then((res) => {
                         playlistItems.push(res.data);
