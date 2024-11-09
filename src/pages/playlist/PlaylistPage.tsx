@@ -60,7 +60,7 @@ const PlaylistPage = () => {
                 const vidID = loadPlaylist[+itemIndex].videoDetail.videoId;
                 await axios
                     .get<Audio>(
-                        `https://y0utubeee-audiooo-api-v1.vercel.app/a@1aa1-13haf--31bbnlm/get?id=${vidID}`
+                        ` http://localhost:3001/a@1aa1-13haf--31bbnlm/get?id=${vidID}`
                     )
                     .then((res) => {
                         playlistItems.push(res.data);
@@ -113,9 +113,9 @@ const PlaylistPage = () => {
             <div className="w-full grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-5 lg:gap-x-0">
                 <div className="col-span-1 flex justify-center sm:justify-start">
                     <div className="w-100 max-w-[300px] sticky top-5 rounded-2xl border border-stone-700 h-[480px] p-3.5">
-                        {playlist?.thumnail ? (
+                        {playlist?.thumbnail ? (
                             <img
-                                src={playlist.thumnail}
+                                src={playlist.thumbnail}
                                 className="object-cover rounded-xl w-full h-[60%]"
                                 alt={playlist.title}
                             />

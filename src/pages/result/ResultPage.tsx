@@ -36,7 +36,7 @@ const ResultPage = () => {
                 </div>
             ) : (
                 <Wrapper>
-                    {result.map((video) => (
+                    {result?.map((video) => (
                         <Video key={video.videoId} video={video} />
                     ))}
                 </Wrapper>

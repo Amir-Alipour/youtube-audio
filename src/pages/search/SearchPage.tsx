@@ -15,7 +15,7 @@ const SearchPage = () => {
 
         axios
             .get(
-                `https://y0utubeee-audiooo-api-v1.vercel.app/a@1aa1-13haf--31bbnlm/suggest?q=${e.target.value}`
+                ` http://localhost:3001/a@1aa1-13haf--31bbnlm/suggest?q=${e.target.value}`
             )
             .then(({ data }: { data: { result: [] } }) => {
                 let filteredData: string[] =

@@ -121,9 +121,9 @@ const PlaylistsPage = () => {
                         key={i}
                         className="h-[350px] md:h-[260px] p-4 rounded-2xl border border-stone-700 hover:bg-stone-800 cursor-pointer flex flex-col justify-between"
                     >
-                        {playlist.thumnail ? (
+                        {playlist.thumbnail ? (
                             <img
-                                src={playlist.thumnail}
+                                src={playlist.thumbnail}
                                 className="object-cover rounded-xl	w-full h-[170px]"
                                 alt={playlist.title}
                             />

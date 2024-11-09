@@ -4,7 +4,7 @@ import { fetchVideos } from "./ResultsActions"
 
 export type ResultsInitialState = {
     isLoading: boolean,
-    data: Video[]
+    data: VideoDetail[]
     lastQuery: string | null
 }
 
@@ -27,7 +27,7 @@ export const ResultsSlice = createSlice({
         builder.addCase(fetchVideos.pending, (state) => {
             state.isLoading = true;
         });
-        builder.addCase(fetchVideos.fulfilled, (state, action: PayloadAction<Video[]>) => {
+        builder.addCase(fetchVideos.fulfilled, (state, action: PayloadAction<VideoDetail[]>) => {
             state.data = action.payload;
             state.isLoading = false;
         });

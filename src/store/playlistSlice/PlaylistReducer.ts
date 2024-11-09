@@ -29,7 +29,7 @@ export const PlaylistSlice = createSlice({
         createPlaylist: (state, action: PayloadAction<string>) => {
             if (state.playlists.map(p => p.playlist_name).includes(action.payload)) return;
 
-            const data = { playlist_name: `playlist_${Date.now()}`, title: action.payload, thumnail: null, last_update: new Date(), items: [] }
+            const data = { playlist_name: `playlist_${Date.now()}`, title: action.payload, thumbnail: null, last_update: new Date(), items: [] }
             const { playlist_name, ...rest } = data
             state.playlists = [data, ...state.playlists]
             localStorage.setItem(playlist_name, JSON.stringify(rest));
@@ -49,7 +49,7 @@ export const PlaylistSlice = createSlice({
         changePlaylistCover: (state, { payload: { cover, playlist } }: PayloadAction<{ playlist: string, cover: string }>) => {
             const selectedPlaylist = getPlaylist(playlist);
             const updatedPlaylist = { ...selectedPlaylist, thumnail: cover, last_update: new Date() }
-            state.playlists[state.playlists.findIndex(p => p.playlist_name === playlist)].thumnail = cover
+            state.playlists[state.playlists.findIndex(p => p.playlist_name === playlist)].thumbnail = cover
             updatePlaylist(updatedPlaylist);
         },
         deleteItemFromPlaylist: (state, { payload: { ID, playlist } }: PayloadAction<{ playlist: string, ID: string }>) => {

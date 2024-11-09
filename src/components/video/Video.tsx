@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import { addHistory } from "../../store/historySlice/HistoryReducer";
 
 type VideoProps = {
-    video: Video;
+    video: VideoDetail;
 };
 
 const Video = ({ video }: VideoProps) => {
@@ -53,7 +53,7 @@ const Video = ({ video }: VideoProps) => {
             <div className="lg:w-[350px] h-[100%] p-3">
                 <Link to={`/detail?id=${video.videoId}`}>
                     <img
-                        src={video.thumbnail}
+                        src={video.thumbnails.high.url}
                         alt={video.title}
                         className="aspect-video w-[100%] h-[100%] rounded-xl shadow shadow-black"
                     />
@@ -76,11 +76,10 @@ const Video = ({ video }: VideoProps) => {
                     ) : null}
                 </div>
                 <div className="text-sm text-stone-400 flex items-center gap-x-3 mt-1">
-                    <p>{viewCounter(video.views, 0)} View</p>
-                    <p>{video.ago}</p>
+                    <p>{viewCounter(+video.viewCount, 0)} View</p>
                 </div>
                 <div className="flex items-center gap-x-2 mt-3 text-stone-200">
-                    <h4>{video.author.name}</h4>
+                    <h4>{video.author}</h4>
                 </div>
                 <div className="mt-10 w-[550px] max-w-[70%]">
                     <p className="truncate text-sm text-white text-opacity-60">

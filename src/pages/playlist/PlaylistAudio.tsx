@@ -31,16 +31,7 @@ const PlaylistAudio = ({
         >
             <div className="lg:w-[350px] h-[100%] p-3">
                 <img
-                    src={
-                        audio.videoDetail.thumbnail.thumbnails
-                            .filter(
-                                (tumb) =>
-                                    tumb.width === 1920 ||
-                                    tumb.width === 336 ||
-                                    tumb.width === 196
-                            )
-                            .sort((a, b) => b.width - a.width)[0].url
-                    }
+                    src={audio.videoDetail.thumbnails.high.url}
                     alt={audio.videoDetail.title}
                     className="aspect-audio	 w-[100%] h-[100%] rounded-xl shadow shadow-black"
                 />
@@ -65,7 +56,7 @@ const PlaylistAudio = ({
                 </div>
                 <div className="mt-10 w-[550px] max-w-[70%]">
                     <p className="truncate text-sm text-white text-opacity-60">
-                        {audio.videoDetail.shortDescription}
+                        {audio.videoDetail.description}
                     </p>
                 </div>
             </div>

@@ -35,7 +35,7 @@ const DetailPage = () => {
     useEffect(() => {
         axios
             .get<Audio>(
-                `https://y0utubeee-audiooo-api-v1.vercel.app/a@1aa1-13haf--31bbnlm/get?id=${ID}`
+                ` http://localhost:3001/a@1aa1-13haf--31bbnlm/get?id=${ID}`
             )
             .then((res) => {
                 setAudio(res.data);
@@ -90,18 +90,7 @@ const DetailPage = () => {
                                 <div className="w-100 sm:w-[50%] md:w-[35%] p-3">
                                     <img
                                         className="w-full h-[100%] rounded-lg"
-                                        src={
-                                            audio.videoDetail.thumbnail.thumbnails
-                                                .filter(
-                                                    (tumb) =>
-                                                        tumb.width === 196 ||
-                                                        tumb.width === 336 ||
-                                                        tumb.width === 1920
-                                                )
-                                                .sort(
-                                                    (a, b) => b.width - a.width
-                                                )[0].url
-                                        }
+                                        src={audio.videoDetail.thumbnails.high.url}
                                         alt={
                                             audio.videoDetail.title +
                                             " thumbnail"
@@ -150,9 +139,7 @@ const DetailPage = () => {
                             </div>
                             {/* ------------------- video info */}
                             <div className="w-100 p-3 pb-4 text-gray-400">
-                                <Description
-                                    text={audio.videoDetail.shortDescription}
-                                />
+                                <Description text={audio.videoDetail.description} />
                             </div>
                             {/* ------------------- description */}
                         </div>
@@ -176,12 +163,7 @@ const DetailPage = () => {
                                     >
                                         <img
                                             className="rounded-xl"
-                                            src={
-                                                item.videoDetail.thumbnail.thumbnails.filter(
-                                                    (tumb) =>
-                                                        tumb.width === 1920
-                                                )[0].url
-                                            }
+                                            src={item.videoDetail.thumbnails.high.url}
                                             alt={
                                                 item.videoDetail.title +
                                                 "thumbnail"
